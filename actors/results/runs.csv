@@ -1,1 +1,478 @@
-run_id,timestamp,workers,gpus,beta,mmd
+--------------1 WOKRER 1 BETA-------------------- 
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 1 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 0
+Worker actor is spawned successfully!
+Worker completed: beta = 0.5, MMD = -0.0392368
+All jobs are completed in 67 seconds
+
+--------------1 WOKRER 2 BETA-------------------- 
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 2 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 1
+Worker actor is spawned successfully!
+Worker completed: beta = 0.5, MMD = -0.0489699
+Number of remaining jobs are: 0
+Worker completed: beta = 0.7, MMD = -0.0472691
+All jobs are completed in 289 seconds
+
+--------------1 WOKRER 4 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 4 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 3
+Worker actor is spawned successfully!
+Worker completed: beta = 0.5, MMD = -0.0349001
+Number of remaining jobs are: 2
+Worker completed: beta = 0.7, MMD = -0.0379572
+Number of remaining jobs are: 1
+Worker completed: beta = 0.8, MMD = -0.0396736
+Number of remaining jobs are: 0
+Worker completed: beta = 1, MMD = -0.037774
+All jobs are completed in 273 seconds
+
+
+--------------2 WOKRER 2 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 2 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 1
+Spawning worker actor 1 on server
+Number of remaining jobs are: 0
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.55, MMD = -0.0494581
+Worker completed: beta = 0.75, MMD = -0.0477512
+All jobs are completed in 176 seconds
+
+
+--------------2 WOKRER 4 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 4 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 3
+Spawning worker actor 1 on server
+Number of remaining jobs are: 2
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.7, MMD = -0.0465937
+Number of remaining jobs are: 1
+Worker completed: beta = 0.5, MMD = -0.0484928
+Number of remaining jobs are: 0
+Worker completed: beta = 1, MMD = -0.0488099
+Worker completed: beta = 0.8, MMD = -0.0475359
+All jobs are completed in 407 seconds
+
+
+--------------2 WOKRER 8 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 8 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 7
+Spawning worker actor 1 on server
+Number of remaining jobs are: 6
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.035, MMD = -0.0462388
+Number of remaining jobs are: 5
+Worker completed: beta = 0.07, MMD = -0.0475901
+Number of remaining jobs are: 4
+Worker completed: beta = 0.14, MMD = -0.0470327
+Number of remaining jobs are: 3
+Worker completed: beta = 0.105, MMD = -0.0479957
+Number of remaining jobs are: 2
+Worker completed: beta = 0.175, MMD = -0.0497637
+Number of remaining jobs are: 1
+Worker completed: beta = 0.21, MMD = -0.0490246
+Number of remaining jobs are: 0
+Worker completed: beta = 0.245, MMD = -0.0495669
+Worker completed: beta = 0.28, MMD = -0.0484301
+All jobs are completed in 769 seconds
+
+
+--------------4 WOKRER 4 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 4 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 3
+Spawning worker actor 1 on server
+Number of remaining jobs are: 2
+Spawning worker actor 2 on server
+Number of remaining jobs are: 1
+Spawning worker actor 3 on server
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Number of remaining jobs are: 0
+Worker actor is spawned successfully!
+Worker completed: beta = 0.184, MMD = -0.0489975
+Worker completed: beta = 0.092, MMD = -0.0475157
+Worker completed: beta = 0.138, MMD = -0.0493346
+Worker completed: beta = 0.046, MMD = -0.0495211
+All jobs are completed in 350 seconds
+
+
+--------------4 WOKRER 8 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 8 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 7
+Spawning worker actor 1 on server
+Number of remaining jobs are: 6
+Spawning worker actor 2 on server
+Number of remaining jobs are: 5
+Spawning worker actor 3 on server
+Number of remaining jobs are: 4
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.138, MMD = -0.0474851
+Number of remaining jobs are: 3
+Worker completed: beta = 0.092, MMD = -0.049307
+Number of remaining jobs are: 2
+Worker completed: beta = 0.046, MMD = -0.0479512
+Number of remaining jobs are: 1
+Worker completed: beta = 0.184, MMD = -0.0483139
+Number of remaining jobs are: 0
+Worker completed: beta = 0.23, MMD = -0.0471488
+Worker completed: beta = 0.322, MMD = -0.0489817
+Worker completed: beta = 0.276, MMD = -0.0490412
+Worker completed: beta = 0.368, MMD = -0.049376
+All jobs are completed in 770 seconds
+
+
+--------------4 WOKRER 16 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 16 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 15
+Spawning worker actor 1 on server
+Number of remaining jobs are: 14
+Spawning worker actor 2 on server
+Number of remaining jobs are: 13
+Spawning worker actor 3 on server
+Number of remaining jobs are: 12
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.046, MMD = -0.0494001
+Number of remaining jobs are: 11
+Worker completed: beta = 0.092, MMD = -0.0480762
+Number of remaining jobs are: 10
+Worker completed: beta = 0.138, MMD = -0.048936
+Number of remaining jobs are: 9
+Worker completed: beta = 0.184, MMD = -0.0469725
+Number of remaining jobs are: 8
+Worker completed: beta = 0.322, MMD = -0.0488185
+Number of remaining jobs are: 7
+Worker completed: beta = 0.276, MMD = -0.049512
+Number of remaining jobs are: 6
+Worker completed: beta = 0.23, MMD = -0.0487584
+Number of remaining jobs are: 5
+Worker completed: beta = 0.368, MMD = -0.0482792
+Number of remaining jobs are: 4
+Worker completed: beta = 0.414, MMD = -0.0486503
+Number of remaining jobs are: 3
+Worker completed: beta = 0.506, MMD = -0.0493478
+Number of remaining jobs are: 2
+Worker completed: beta = 0.552, MMD = -0.0492465
+Number of remaining jobs are: 1
+Worker completed: beta = 0.46, MMD = -0.0480993
+Number of remaining jobs are: 0
+Worker completed: beta = 0.736, MMD = -0.0456681
+Worker completed: beta = 0.598, MMD = -0.0486838
+Worker completed: beta = 0.644, MMD = -0.0478439
+Worker completed: beta = 0.69, MMD = -0.0481756
+All jobs are completed in 1500 seconds
+
+
+--------------8 WOKRER 8 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 8 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 7
+Spawning worker actor 1 on server
+Number of remaining jobs are: 6
+Spawning worker actor 2 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 5
+Spawning worker actor 3 on server
+Number of remaining jobs are: 4
+Spawning worker actor 4 on server
+Number of remaining jobs are: 3
+Spawning worker actor 5 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 2
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Spawning worker actor 6 on server
+Number of remaining jobs are: 1
+Spawning worker actor 7 on server
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Number of remaining jobs are: 0
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.046, MMD = -0.0506195
+Worker completed: beta = 0.322, MMD = -0.0478505
+Worker completed: beta = 0.184, MMD = -0.0486631
+Worker completed: beta = 0.276, MMD = -0.049086
+Worker completed: beta = 0.092, MMD = -0.0488704
+Worker completed: beta = 0.23, MMD = -0.0480906
+Worker completed: beta = 0.368, MMD = -0.0497323
+Worker completed: beta = 0.138, MMD = -0.0510501
+All jobs are completed in 498 seconds
+
+
+--------------8 WOKRER 16 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 16 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 15
+Spawning worker actor 1 on server
+Number of remaining jobs are: 14
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Spawning worker actor 2 on server
+Number of remaining jobs are: 13
+Spawning worker actor 3 on server
+Number of remaining jobs are: 12
+Spawning worker actor 4 on server
+Number of remaining jobs are: 11
+Spawning worker actor 5 on server
+Number of remaining jobs are: 10
+Spawning worker actor 6 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 9
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Spawning worker actor 7 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 8
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.276, MMD = -0.0483665
+Number of remaining jobs are: 7
+Worker completed: beta = 0.046, MMD = -0.0479819
+Number of remaining jobs are: 6
+Worker completed: beta = 0.138, MMD = -0.0497828
+Number of remaining jobs are: 5
+Worker completed: beta = 0.368, MMD = -0.0487016
+Number of remaining jobs are: 4
+Worker completed: beta = 0.092, MMD = -0.0508564
+Number of remaining jobs are: 3
+Worker completed: beta = 0.322, MMD = -0.0492697
+Number of remaining jobs are: 2
+Worker completed: beta = 0.23, MMD = -0.0483725
+Number of remaining jobs are: 1
+Worker completed: beta = 0.184, MMD = -0.050006
+Number of remaining jobs are: 0
+Worker completed: beta = 0.46, MMD = -0.0484512
+Worker completed: beta = 0.506, MMD = -0.0469559
+Worker completed: beta = 0.552, MMD = -0.0495219
+Worker completed: beta = 0.414, MMD = -0.0476944
+Worker completed: beta = 0.69, MMD = -0.0480539
+Worker completed: beta = 0.644, MMD = -0.0476644
+Worker completed: beta = 0.598, MMD = -0.0489005
+Worker completed: beta = 0.736, MMD = -0.0477785
+All jobs are completed in 949 seconds
+
+
+--------------8 WOKRER 32 BETA--------------------
+
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 32 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 31
+Spawning worker actor 1 on server
+Number of remaining jobs are: 30
+Spawning worker actor 2 on server
+Number of remaining jobs are: 29
+Worker actor is spawned successfully!
+Spawning worker actor 3 on server
+Number of remaining jobs are: 28
+Spawning worker actor 4 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 27
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Spawning worker actor 5 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 26
+Worker actor is spawned successfully!
+Spawning worker actor 6 on server
+Number of remaining jobs are: 25
+Spawning worker actor 7 on server
+Number of remaining jobs are: 24
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.092, MMD = -0.0478847
+Number of remaining jobs are: 23
+Worker completed: beta = 0.046, MMD = -0.0482509
+Number of remaining jobs are: 22
+Worker completed: beta = 0.276, MMD = -0.0460849
+Number of remaining jobs are: 21
+Worker completed: beta = 0.184, MMD = -0.0472957
+Number of remaining jobs are: 20
+Worker completed: beta = 0.368, MMD = -0.0495695
+Number of remaining jobs are: 19
+Worker completed: beta = 0.322, MMD = -0.0488753
+Number of remaining jobs are: 18
+Worker completed: beta = 0.23, MMD = -0.0482268
+Number of remaining jobs are: 17
+Worker completed: beta = 0.138, MMD = -0.0497316
+Number of remaining jobs are: 16
+Worker completed: beta = 0.552, MMD = -0.0479431
+Number of remaining jobs are: 15
+Worker completed: beta = 0.506, MMD = -0.0475298
+Number of remaining jobs are: 14
+Worker completed: beta = 0.46, MMD = -0.0499552
+Number of remaining jobs are: 13
+Worker completed: beta = 0.736, MMD = -0.0493858
+Number of remaining jobs are: 12
+Worker completed: beta = 0.69, MMD = -0.0474807
+Number of remaining jobs are: 11
+Worker completed: beta = 0.598, MMD = -0.048721
+Number of remaining jobs are: 10
+Worker completed: beta = 0.644, MMD = -0.047822
+Number of remaining jobs are: 9
+Worker completed: beta = 0.414, MMD = 0
+Number of remaining jobs are: 8
+Worker completed: beta = 0.874, MMD = -0.0482452
+Number of remaining jobs are: 7
+Worker completed: beta = 0.966, MMD = -0.0490308
+Number of remaining jobs are: 6
+Worker completed: beta = 1.058, MMD = -0.0475177
+Number of remaining jobs are: 5
+Worker completed: beta = 0.828, MMD = -0.048865
+Number of remaining jobs are: 4
+Worker completed: beta = 0.92, MMD = -0.0471305
+Number of remaining jobs are: 3
+Worker completed: beta = 1.012, MMD = -0.0480232
+Number of remaining jobs are: 2
+Worker completed: beta = 1.104, MMD = -0.0477406
+Number of remaining jobs are: 1
+Worker completed: beta = 0.782, MMD = -0.0487139
+Number of remaining jobs are: 0
+Worker completed: beta = 1.15, MMD = -0.0491198
+Worker completed: beta = 1.242, MMD = -0.0482235
+Worker completed: beta = 1.196, MMD = -0.0482119
+Worker completed: beta = 1.426, MMD = -0.0479397
+Worker completed: beta = 1.334, MMD = -0.0486778
+Worker completed: beta = 1.38, MMD = -0.0483161
+Worker completed: beta = 1.472, MMD = -0.0475955
+Worker completed: beta = 1.288, MMD = -0.0482587
+All jobs are completed in 1896 seconds
+
+
+--------------16 WOKRER 16 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 16 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 15
+Worker actor is spawned successfully!
+Spawning worker actor 1 on server
+Number of remaining jobs are: 14
+Spawning worker actor 2 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 13
+Spawning worker actor 3 on server
+Number of remaining jobs are: 12
+Worker actor is spawned successfully!
+Spawning worker actor 4 on server
+Number of remaining jobs are: 11
+Spawning worker actor 5 on server
+Number of remaining jobs are: 10
+Spawning worker actor 6 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 9
+Spawning worker actor 7 on server
+Number of remaining jobs are: 8
+Spawning worker actor 8 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 7
+Spawning worker actor 9 on server
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Number of remaining jobs are: 6
+Spawning worker actor 10 on server
+Number of remaining jobs are: 5
+Spawning worker actor 11 on server
+Number of remaining jobs are: 4
+Spawning worker actor 12 on server
+Number of remaining jobs are: 3
+Spawning worker actor 13 on server
+Worker actor is spawned successfully!
+Number of remaining jobs are: 2
+Spawning worker actor 14 on server
+Number of remaining jobs are: 1
+Spawning worker actor 15 on server
+Number of remaining jobs are: 0
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker actor is spawned successfully!
+Worker completed: beta = 0.184, MMD = -0.0493933
+Worker completed: beta = 0.23, MMD = -0.0485569
+Worker completed: beta = 0.368, MMD = -0.0490254
+Worker completed: beta = 0.414, MMD = -0.0472738
+Worker completed: beta = 0.138, MMD = -0.0496403
+Worker completed: beta = 0.506, MMD = 0
+Worker completed: beta = 0.322, MMD = 0
+Worker completed: beta = 0.46, MMD = -0.0476316
+Worker completed: beta = 0.736, MMD = 0
+Worker completed: beta = 0.276, MMD = -0.0480937
+Worker completed: beta = 0.092, MMD = 0
+Worker completed: beta = 0.552, MMD = 0
+Worker completed: beta = 0.598, MMD = -0.0475445
+Worker completed: beta = 0.644, MMD = -0.0487753
+Worker completed: beta = 0.69, MMD = 0
+Worker completed: beta = 0.046, MMD = -0.0498189
+All jobs are completed in 907 seconds

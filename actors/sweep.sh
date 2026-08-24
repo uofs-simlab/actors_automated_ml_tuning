@@ -11,7 +11,7 @@ BIN="./test_actor"
 
 # --- edit these to define the sweep -----------------------------------
 WORKERS_LIST=(1 2 4 8)                      # --workers values to try
-GPUS_LIST=(2)                               # --gpus values to try
+GPUS_LIST=(1)                               # --gpus values to try
 BETAS_LIST=(
   "0.1,0.5,1.0,2.0,4.0"
   "0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8"

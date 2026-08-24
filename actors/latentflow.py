@@ -12,17 +12,17 @@ import matplotlib.pyplot as plt
 
 
 LATENT_DIM  = 64#16     # elbow for recon  # size of the latent vector
-BATCH_SIZE  = 512#256    # VAEs are more sensitive to batch size than standard autoencoders because:
+BATCH_SIZE  = 51201#256    # VAEs are more sensitive to batch size than standard autoencoders because:
                      # KL term is averaged over batch
                      # posterior statistics depend on batch distribution
                      # So: Bigger batch ≠ always better latent space
-EPOCHS      = 20
+EPOCHS      = 5
 LR          = 1e-3
 BETA        = 1.0#0.10      # default weight on KL term (β-VAE); each actor overrides this
 DEVICE      = "cuda" if torch.cuda.is_available() else "cpu"
 
 LR_FM       = 1e-5
-EPOCHS_FM   = 20
+EPOCHS_FM   = 5
 
 
 class Encoder(nn.Module):
@@ -255,10 +255,10 @@ def LearnLatent(model, beta: float, train_loader, test_loader, tag: str):
         test_ssim_list.append(test_ssim)
         test_psnr_list.append(test_psnr)
 
-    vae_save_path = f"vae_mnist_{tag}.pth"
-    torch.save(model, vae_save_path)
-    print(f"\nModel saved → {vae_save_path}")
-    save_reconstructions(model, test_loader, fname=f"reconstructions_{tag}.png")
+    # vae_save_path = f"vae_mnist_{tag}.pth"
+    # torch.save(model, vae_save_path)
+    # print(f"\nModel saved → {vae_save_path}")
+    # save_reconstructions(model, test_loader, fname=f"reconstructions_{tag}.png")
 
     print("\nEncoding test set deterministically (z = mu)...")
     latents, labels = encode_test_set(model, test_loader)
@@ -274,45 +274,45 @@ def LearnLatent(model, beta: float, train_loader, test_loader, tag: str):
     print(f"  Max   : {latents.max():.3f}")
     print("\nDone learning latents.\n")
 
-    plt.plot(train_total_list, label='train')
-    plt.plot(test_total_list, label='test')
-    plt.xlabel('Epochs')
-    plt.ylabel('Total Loss')
-    plt.yscale('log')
-    plt.legend()
-    plt.savefig(f'Latent_loss_curve_{tag}.png')
+    # plt.plot(train_total_list, label='train')
+    # plt.plot(test_total_list, label='test')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('Total Loss')
+    # plt.yscale('log')
+    # plt.legend()
+    # plt.savefig(f'Latent_loss_curve_{tag}.png')
 
-    plt.figure()
-    plt.plot(train_recon_list, label='train')
-    plt.plot(test_recon_list, label='test')
-    plt.xlabel('Epochs')
-    plt.ylabel('Reconstruction Loss')
-    plt.yscale('log')
-    plt.legend()
-    plt.savefig(f'Latent_Recon_curve_{tag}.png')
+    # plt.figure()
+    # plt.plot(train_recon_list, label='train')
+    # plt.plot(test_recon_list, label='test')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('Reconstruction Loss')
+    # plt.yscale('log')
+    # plt.legend()
+    # plt.savefig(f'Latent_Recon_curve_{tag}.png')
 
-    plt.figure()
-    plt.plot(train_kl_list, label='train')
-    plt.plot(test_kl_list, label='test')
-    plt.xlabel('Epochs')
-    plt.ylabel('KL Loss')
-    plt.yscale('log')
-    plt.legend()
-    plt.savefig(f'Latent_KL_curve_{tag}.png')
+    # plt.figure()
+    # plt.plot(train_kl_list, label='train')
+    # plt.plot(test_kl_list, label='test')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('KL Loss')
+    # plt.yscale('log')
+    # plt.legend()
+    # plt.savefig(f'Latent_KL_curve_{tag}.png')
 
-    plt.figure()
-    plt.plot(test_ssim_list, label='test')
-    plt.xlabel('Epochs')
-    plt.ylabel('SSIM')
-    plt.legend()
-    plt.savefig(f'Latent_SSIM_curve_{tag}.png')
+    # plt.figure()
+    # plt.plot(test_ssim_list, label='test')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('SSIM')
+    # plt.legend()
+    # plt.savefig(f'Latent_SSIM_curve_{tag}.png')
 
-    plt.figure()
-    plt.plot(test_psnr_list, label='test')
-    plt.xlabel('Epochs')
-    plt.ylabel('PSNR')
-    plt.legend()
-    plt.savefig(f'Latent_PSNR_curve_{tag}.png')
+    # plt.figure()
+    # plt.plot(test_psnr_list, label='test')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('PSNR')
+    # plt.legend()
+    # plt.savefig(f'Latent_PSNR_curve_{tag}.png')
 
     return model
 
@@ -445,17 +445,17 @@ def trainFM(model_FM, Latent_model, train_loader, tag: str):
 
         losses.append(loss_.item())
 
-    fm_save_path = f"fm_mnist_{tag}.pth"
-    torch.save(model_FM, fm_save_path)
-    print(f"\nModel saved → {fm_save_path}")
+    # fm_save_path = f"fm_mnist_{tag}.pth"
+    # torch.save(model_FM, fm_save_path)
+    # print(f"\nModel saved → {fm_save_path}")
 
-    plt.figure()
-    plt.plot(losses, label='train')
-    plt.xlabel('Epochs')
-    plt.ylabel('Flow Loss')
-    plt.yscale('log')
-    plt.legend()
-    plt.savefig(f'Flow_loss_curve_{tag}.png')
+    # plt.figure()
+    # plt.plot(losses, label='train')
+    # plt.xlabel('Epochs')
+    # plt.ylabel('Flow Loss')
+    # plt.yscale('log')
+    # plt.legend()
+    # plt.savefig(f'Flow_loss_curve_{tag}.png')
 
     return model_FM
 
@@ -503,14 +503,14 @@ def evaluate_mmd(model_FM, Latent_model, test_loader, device, tag: str, num_samp
         device=device
     )
 
-    fig, axes = plt.subplots(1, 10, figsize=(15, 2))
+    # fig, axes = plt.subplots(1, 10, figsize=(15, 2))
 
-    for i in range(10):
-        axes[i].imshow(fake_z[i, 0].cpu(), cmap="gray")
-        axes[i].axis("off")
+    # for i in range(10):
+    #     axes[i].imshow(fake_z[i, 0].cpu(), cmap="gray")
+    #     axes[i].axis("off")
 
-    plt.tight_layout()
-    plt.savefig(f'GeneratedSamples_{tag}.png')
+    # plt.tight_layout()
+    # plt.savefig(f'GeneratedSamples_{tag}.png')
 
     fake_z = fake_z.reshape(fake_z.size(0), -1).to(device)
 
