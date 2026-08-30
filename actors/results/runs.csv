@@ -19,10 +19,11 @@ jobs are created successfully with 2
 Spawning worker actor 0 on server
 Number of remaining jobs are: 1
 Worker actor is spawned successfully!
-Worker completed: beta = 0.5, MMD = -0.0489699
+Worker completed: beta = 0.7, MMD = -0.0473464
 Number of remaining jobs are: 0
-Worker completed: beta = 0.7, MMD = -0.0472691
-All jobs are completed in 289 seconds
+Worker completed: beta = 0.05, MMD = -0.0477458
+All jobs are completed in 146 seconds
+
 
 --------------1 WOKRER 4 BETA--------------------
 Port: 8080 Host: hundsdorfer
@@ -42,6 +43,75 @@ Number of remaining jobs are: 0
 Worker completed: beta = 1, MMD = -0.037774
 All jobs are completed in 273 seconds
 
+
+--------------1 WOKRER 8 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 8 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 7
+Worker actor is spawned successfully!
+Worker completed: beta = 0.046, MMD = -0.0505364
+Number of remaining jobs are: 6
+Worker completed: beta = 0.092, MMD = -0.0487176
+Number of remaining jobs are: 5
+Worker completed: beta = 0.138, MMD = -0.0486963
+Number of remaining jobs are: 4
+Worker completed: beta = 0.184, MMD = -0.0487059
+Number of remaining jobs are: 3
+Worker completed: beta = 0.23, MMD = -0.048214
+Number of remaining jobs are: 2
+Worker completed: beta = 0.276, MMD = -0.0480126
+Number of remaining jobs are: 1
+Worker completed: beta = 0.322, MMD = -0.0481921
+Number of remaining jobs are: 0
+Worker completed: beta = 0.368, MMD = -0.0480986
+All jobs are completed in 574 seconds
+
+
+--------------1 WOKRER 16 BETA--------------------
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 16 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 15
+Worker actor is spawned successfully!
+Worker completed: beta = 0.046, MMD = -0.0486096
+Number of remaining jobs are: 14
+Worker completed: beta = 0.092, MMD = -0.0488598
+Number of remaining jobs are: 13
+Worker completed: beta = 0.138, MMD = -0.0493097
+Number of remaining jobs are: 12
+Worker completed: beta = 0.184, MMD = -0.0482204
+Number of remaining jobs are: 11
+Worker completed: beta = 0.23, MMD = -0.0477482
+Number of remaining jobs are: 10
+Worker completed: beta = 0.276, MMD = -0.0490078
+Number of remaining jobs are: 9
+Worker completed: beta = 0.322, MMD = -0.0483947
+Number of remaining jobs are: 8
+Worker completed: beta = 0.368, MMD = -0.048416
+Number of remaining jobs are: 7
+Worker completed: beta = 0.414, MMD = -0.0473169
+Number of remaining jobs are: 6
+Worker completed: beta = 0.46, MMD = -0.0491238
+Number of remaining jobs are: 5
+Worker completed: beta = 0.506, MMD = -0.0495211
+Number of remaining jobs are: 4
+Worker completed: beta = 0.552, MMD = -0.0478801
+Number of remaining jobs are: 3
+Worker completed: beta = 0.598, MMD = -0.0488272
+Number of remaining jobs are: 2
+Worker completed: beta = 0.644, MMD = -0.0479001
+Number of remaining jobs are: 1
+Worker completed: beta = 0.69, MMD = -0.0480697
+Number of remaining jobs are: 0
+Worker completed: beta = 0.736, MMD = -0.0493455
+All jobs are completed in 1157 seconds
 
 --------------2 WOKRER 2 BETA--------------------
 Port: 8080 Host: hundsdorfer
@@ -476,3 +546,79 @@ Worker completed: beta = 0.644, MMD = -0.0487753
 Worker completed: beta = 0.69, MMD = 0
 Worker completed: beta = 0.046, MMD = -0.0498189
 All jobs are completed in 907 seconds
+
+
+
+
+Port: 8080 Host: hundsdorfer
+Host: hundsdorfer
+Server Mode: 1
+Server is running on port 8080
+jobs are created successfully with 32 
+Spawning worker actor 0 on server
+Number of remaining jobs are: 31
+Worker actor is spawned successfully!
+Worker completed: beta = 0.046, MMD = -0.0479624
+Number of remaining jobs are: 30
+Worker completed: beta = 0.092, MMD = -0.0485369
+Number of remaining jobs are: 29
+Worker completed: beta = 0.138, MMD = -0.0484599
+Number of remaining jobs are: 28
+Worker completed: beta = 0.184, MMD = -0.0488577
+Number of remaining jobs are: 27
+Worker completed: beta = 0.23, MMD = -0.049778
+Number of remaining jobs are: 26
+Worker completed: beta = 0.276, MMD = -0.0481368
+Number of remaining jobs are: 25
+Worker completed: beta = 0.322, MMD = -0.0483806
+Number of remaining jobs are: 24
+Worker completed: beta = 0.368, MMD = -0.0488364
+Number of remaining jobs are: 23
+Worker completed: beta = 0.414, MMD = -0.0470452
+Number of remaining jobs are: 22
+Worker completed: beta = 0.46, MMD = -0.0483392
+Number of remaining jobs are: 21
+Worker completed: beta = 0.506, MMD = -0.0489519
+Number of remaining jobs are: 20
+Worker completed: beta = 0.552, MMD = -0.0481077
+Number of remaining jobs are: 19
+Worker completed: beta = 0.598, MMD = -0.0475693
+Number of remaining jobs are: 18
+Worker completed: beta = 0.644, MMD = -0.047556
+Number of remaining jobs are: 17
+Worker completed: beta = 0.69, MMD = -0.048732
+Number of remaining jobs are: 16
+Worker completed: beta = 0.736, MMD = -0.048522
+Number of remaining jobs are: 15
+Worker completed: beta = 0.782, MMD = -0.0475086
+Number of remaining jobs are: 14
+Worker completed: beta = 0.828, MMD = -0.0489112
+Number of remaining jobs are: 13
+Worker completed: beta = 0.874, MMD = -0.0486242
+Number of remaining jobs are: 12
+Worker completed: beta = 0.92, MMD = -0.048776
+Number of remaining jobs are: 11
+Worker completed: beta = 0.966, MMD = -0.0485188
+Number of remaining jobs are: 10
+Worker completed: beta = 1.012, MMD = -0.048939
+Number of remaining jobs are: 9
+Worker completed: beta = 1.058, MMD = -0.0480242
+Number of remaining jobs are: 8
+Worker completed: beta = 1.104, MMD = -0.0475036
+Number of remaining jobs are: 7
+Worker completed: beta = 1.15, MMD = -0.048689
+Number of remaining jobs are: 6
+Worker completed: beta = 1.196, MMD = -0.0476433
+Number of remaining jobs are: 5
+Worker completed: beta = 1.242, MMD = -0.048474
+Number of remaining jobs are: 4
+Worker completed: beta = 1.288, MMD = -0.0468924
+Number of remaining jobs are: 3
+Worker completed: beta = 1.334, MMD = -0.0476412
+Number of remaining jobs are: 2
+Worker completed: beta = 1.38, MMD = -0.0488347
+Number of remaining jobs are: 1
+Worker completed: beta = 1.426, MMD = -0.0465668
+Number of remaining jobs are: 0
+Worker completed: beta = 1.472, MMD = -0.0490441
+All jobs are completed in 2319 seconds

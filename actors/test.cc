@@ -56,7 +56,7 @@ behavior worker_actor(stateful_actor<worker_state>* self, actor manager, int num
                     // one physical GPU per process is what actually pins this run to it.
                     command << "CUDA_VISIBLE_DEVICES=" << gpu_id << " ";
                 }
-                command << "../.venv/bin/python3 ./latentflow.py --beta " << job.beta << " --quiet";
+                command << "../.venv/bin/python3 ./latentflow1.py --beta " << job.beta << " --quiet";
 
                 FILE* pipe = popen(command.str().c_str(), "r");
                 if (!pipe) {

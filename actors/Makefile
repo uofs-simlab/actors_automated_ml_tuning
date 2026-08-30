@@ -2,6 +2,9 @@ CXX      ?= g++
 TARGET   := test_actor
 SRC      := test.cc
 
+MFBO_TARGET := mfbo_demo
+MFBO_SRC    := mfbo_demo.cc
+
 # Installed CAF prefix (headers in $(CAF_PREFIX)/include, libs in $(CAF_PREFIX)/$(CAF_LIBDIR)).
 # test.cc uses the CAF >=1.0 API (anon_mail, self->println, callable self->state()),
 # which the system CAF at /usr/local/caf (0.18.6) does not have. The 1.1.0 build
@@ -21,15 +24,22 @@ CXXFLAGS += -I$(CAF_PREFIX)/include
 LDFLAGS  += -L$(CAF_PREFIX)/$(CAF_LIBDIR) -Wl,-rpath,$(CAF_PREFIX)/$(CAF_LIBDIR)
 endif
 
-.PHONY: all run clean
+.PHONY: all run clean mfbo run-mfbo
 
-all: $(TARGET)
+all: $(TARGET) $(MFBO_TARGET)
 
 $(TARGET): $(SRC) config.h
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
-run: $(TARGET)
-	./$(TARGET) $(ARGS)
+# mfbo_demo has no CAF dependency (plain C++17 + libm), so it builds without
+# CAF_PREFIX/LDLIBS.
+mfbo: $(MFBO_TARGET)
+
+$(MFBO_TARGET): $(MFBO_SRC) mfbo.h
+	$(CXX) -std=c++17 -O2 -Wall -Wextra $(MFBO_SRC) -o $(MFBO_TARGET)
+
+run-mfbo: $(MFBO_TARGET)
+	./$(MFBO_TARGET)
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(MFBO_TARGET)
