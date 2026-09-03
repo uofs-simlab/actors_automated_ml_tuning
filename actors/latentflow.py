@@ -556,6 +556,8 @@ def run(beta: float = BETA):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a β-VAE + flow matching model.")
     parser.add_argument("--beta", type=float, default=BETA, help="weight on the KL term (β-VAE)")
+    parser.add_argument("--epochs", type=int, default=EPOCHS)
+    parser.add_argument("--fm-epochs", type=int, default=EPOCHS_FM)
     parser.add_argument(
         "--quiet", action="store_true",
         help="send training logs to stderr and print only the final MMD score to stdout "
