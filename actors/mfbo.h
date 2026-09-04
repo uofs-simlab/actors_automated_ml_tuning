@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <functional>
 #include <limits>
 #include <stdexcept>
 #include <utility>
@@ -39,7 +40,7 @@ inline double high_fn(double x) {
 
 // ---- Small linear algebra (Cholesky solve for SPD systems) ----
 
-// In-place-free Cholesky decomposition: A = L L^T, A must be symmetric
+// In-place-free Cholesky decomposition: A = L.L^T, A must be symmetric
 // positive definite (true here since K = kernel + 1e-6*I).
 inline Mat cholesky(const Mat& A) {
     size_t n = A.size();
@@ -96,7 +97,7 @@ inline Mat cholesky_solve_mat(const Mat& L, const Mat& B) {
 
 class MFBO {
 public:
-    using Fn = double (*)(double);
+    using Fn = std::function<double(double)>;
 
     MFBO(Fn low, Fn high, std::pair<double, double> bounds)
         : rho(1.0), low_(low), high_(high), bounds_(bounds) {}
@@ -129,7 +130,17 @@ public:
     static void gp(const Vec& X, const Vec& y, const Vec& query, Vec& mean_out, Vec& std_out) {
         size_t n = X.size();
         Mat K = kernel(X, X);
-        for (size_t i = 0; i < n; ++i) K[i][i] += 1e-6; // numerical stability
+        // Diagonal nugget: 1e-6 for numerical stability plus a noise term
+        // scaled to the spread of y, since a few-epoch / small-batch training
+        // run is a genuinely noisy observation, not a near-exact one.
+        double ybar = 0.0;
+        for (double v : y) ybar += v;
+        ybar /= (n ? double(n) : 1.0);
+        double vy = 0.0;
+        for (double v : y) vy += (v - ybar) * (v - ybar);
+        vy /= (n > 1 ? double(n - 1) : 1.0);
+        double nugget = 1e-6 + 1e-3 * vy;
+        for (size_t i = 0; i < n; ++i) K[i][i] += nugget;
 
         Mat Kx = kernel(query, X); // m x n
         Mat L = cholesky(K);
@@ -176,9 +187,11 @@ public:
         // High-fidelity correction
         // -----------------------
         if (!high_X_.empty()) {
-            // Evaluate low fidelity at high-fidelity locations
-            Vec low_at_X(high_X_.size());
-            for (size_t i = 0; i < high_X_.size(); ++i) low_at_X[i] = low_(high_X_[i]);
+            // Low fidelity at the high-fidelity locations: use the low GP's
+            // posterior mean (AR1 correction) instead of re-running low_(),
+            // which would launch a full training run on every acquisition step.
+            Vec low_at_X, low_at_X_std;
+            gp(low_X_, low_y_, high_X_, low_at_X, low_at_X_std);
 
             // High - rho * Low
             Vec discrepancy(high_X_.size());

@@ -542,13 +542,21 @@ def evaluate_mmd(model_FM, Latent_model, test_loader, device, tag: str, num_samp
     return mmd_score
 
 
-def run(beta: float = BETA):
+def run(beta: float = BETA, epochs: int = EPOCHS, fm_epochs: int = EPOCHS_FM,
+        batch_size: int = BATCH_SIZE, tag_suffix: str = ""):
     """
     Full VAE + flow-matching pipeline for one beta value.
     Each output file is tagged with beta so parallel actors running
-    different beta values never clobber each other's results.
+    different beta values never clobber each other's results. `tag_suffix`
+    further separates runs at the same beta but different fidelity
+    (e.g. MFBO's cheap low-epoch probe vs. its full high-fidelity run).
     """
-    tag = f"beta{beta}"
+    # LearnLatent / trainFM / the GPUTensorLoaders read these module-level
+    # knobs at call time; rebind them here so one process = one fidelity setting.
+    global EPOCHS, EPOCHS_FM, BATCH_SIZE
+    EPOCHS, EPOCHS_FM, BATCH_SIZE = epochs, fm_epochs, batch_size
+
+    tag = f"beta{beta}{tag_suffix}"
 
     # Load MNIST as raw tensors (no CPU DataLoader/transform pipeline) and
     # move the whole dataset onto DEVICE once; batching/shuffling then
@@ -584,6 +592,12 @@ def run(beta: float = BETA):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a β-VAE + flow matching model.")
     parser.add_argument("--beta", type=float, default=BETA, help="weight on the KL term (β-VAE)")
+    parser.add_argument("--epochs", type=int, default=EPOCHS)
+    parser.add_argument("--fm-epochs", type=int, default=EPOCHS_FM)
+    parser.add_argument("--batch-size", type=int, default=BATCH_SIZE)
+    parser.add_argument("--tag-suffix", default="",
+                        help="appended to output filenames; keeps same-beta runs "
+                             "at different fidelities from clobbering each other")
     parser.add_argument(
         "--quiet", action="store_true",
         help="send training logs to stderr and print only the final MMD score to stdout "
@@ -591,9 +605,12 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    run_kwargs = dict(epochs=args.epochs, fm_epochs=args.fm_epochs,
+                      batch_size=args.batch_size, tag_suffix=args.tag_suffix)
+
     if args.quiet:
         with contextlib.redirect_stdout(sys.stderr):
-            result = run(args.beta)
+            result = run(args.beta, **run_kwargs)
         print(result["mmd"])
     else:
-        run(args.beta)
+        run(args.beta, **run_kwargs)
