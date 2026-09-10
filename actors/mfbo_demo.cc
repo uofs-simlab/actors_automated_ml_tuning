@@ -62,7 +62,13 @@ double run_latentflow(double beta, int fidelity) {
     }
 
     double mmd = std::stod(out);
-    double y = std::log10(mmd);
+    // latentflow1.py's compute_mmd() now floors MMD at 0.0 (a shared-bandwidth
+    // MMD^2 estimator can only dip below 0 by float round-off), so this is a
+    // defensive floor for exact zero / stray negatives, not a workaround for
+    // the old shared-bandwidth bug. 1e-6 keeps log10 in the same ballpark as
+    // real MMD readings (~1e-2..1e-5) instead of an outlier like -300 that
+    // would dominate the GP's nugget-variance estimate.
+    double y = std::log10(std::max(mmd, 1e-6));
     cache[key] = y;
     std::fprintf(stderr, "  [f=%d] beta=%.4f  MMD=%.3e  log10=%.4f\n",
                  fidelity, beta, mmd, y);

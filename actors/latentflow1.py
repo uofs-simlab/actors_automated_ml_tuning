@@ -484,19 +484,30 @@ def compute_mmd(x_real, x_fake, sigma=None):
     """
     MMD^2 between real and fake samples
     """
+    if sigma is None:
+        # Median heuristic, but computed once on the *pooled* real+fake
+        # distances and shared across K_xx/K_yy/K_xy below. MMD^2 is only
+        # guaranteed >= 0 (it's ||mean_embedding(real) - mean_embedding(fake)||^2
+        # in one RKHS) when all three terms use the same kernel; leaving
+        # sigma=None and letting rbf_kernel() re-derive its own bandwidth
+        # per call gives each term a *different* kernel, which breaks that
+        # guarantee and can (and did) produce a meaningfully negative score.
+        pooled = torch.cat([x_real, x_fake], dim=0)
+        sigma = compute_pairwise_sq_dists(pooled, pooled).median().sqrt().detach() + 1e-8
+
     K_xx = rbf_kernel(x_real, x_real, sigma)
     K_yy = rbf_kernel(x_fake, x_fake, sigma)
     K_xy = rbf_kernel(x_real, x_fake, sigma)
-
-    m = x_real.size(0)
-    n = x_fake.size(0)
 
     mmd = (
         K_xx.mean()
         + K_yy.mean()
         - 2 * K_xy.mean()
     )
-    return mmd.item()
+    # Floating-point round-off can still push an already-tiny MMD a hair
+    # below zero even with a shared sigma; clamp that residual noise, but
+    # nothing should be relying on this to hide a real negative value anymore.
+    return max(mmd.item(), 0.0)
 
 @torch.no_grad()
 def evaluate_mmd(model_FM, Latent_model, test_loader, device, tag: str, num_samples=20000):

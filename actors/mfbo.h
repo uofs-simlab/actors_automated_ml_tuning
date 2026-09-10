@@ -174,14 +174,29 @@ public:
         Vec low_mean, low_std;
 
         // -----------------------
+        // Single-fidelity shortcut
+        // -----------------------
+        // With no low-fidelity data at all (e.g. the mfbo_hf driver, which
+        // only ever runs full-fidelity), the multi-fidelity path below would
+        // synthesize low_std = 1 and fold it into every prediction, so
+        // std_out could never drop below 1 even right on top of an
+        // observation. That makes the acquisition unable to tell explored
+        // from unexplored beta. Just return the plain GP posterior over the
+        // high-fidelity points instead.
+        if (low_X_.empty()) {
+            if (high_X_.empty()) {
+                mean_out.assign(m, 0.0);
+                std_out.assign(m, 1.0);
+            } else {
+                gp(high_X_, high_y_, xs, mean_out, std_out);
+            }
+            return;
+        }
+
+        // -----------------------
         // Low-fidelity GP
         // -----------------------
-        if (!low_X_.empty()) {
-            gp(low_X_, low_y_, xs, low_mean, low_std);
-        } else {
-            low_mean.assign(m, 0.0);
-            low_std.assign(m, 1.0);
-        }
+        gp(low_X_, low_y_, xs, low_mean, low_std);
 
         // -----------------------
         // High-fidelity correction
@@ -218,15 +233,19 @@ public:
         }
     }
 
+    //Select the x point which has best score (lowest mean and high std)
     double step() {
         const int N = 200;
         Vec xs(N);
         for (int i = 0; i < N; ++i)
+            //Lay 200 evenly spaced out points
             xs[i] = bounds_.first + (bounds_.second - bounds_.first) * i / double(N - 1);
 
+        //create resulting mean and std for all those 200 points
         Vec mean, std;
         predict_high(xs, mean, std);
 
+        //Find the lowest value 
         double best = !high_y_.empty()
             ? *std::min_element(high_y_.begin(), high_y_.end())
             : *std::min_element(low_y_.begin(), low_y_.end());
@@ -242,6 +261,77 @@ public:
             }
         }
         return xs[best_i];
+    }
+
+    // Proposes up to `k` distinct candidate x's from the same
+    // exploration/exploitation surface `step()` scores, without evaluating
+    // any of them. This is what makes parallel workers possible: `step()`
+    // alone only ever hands you one point at a time (the single best-scoring
+    // one), which is fine for a sequential loop but leaves every worker but
+    // one idle. Here we take the ranked list of candidates instead of just
+    // the top one, and greedily keep points that are at least `min_gap`
+    // apart -- from each other AND from every x already evaluated
+    // (low_X_ / high_X_) -- so a batch doesn't collapse onto one spot the
+    // model currently likes, and a later round doesn't re-run a point an
+    // earlier round already measured. `min_gap` is in x units (here the
+    // normalized [0,1] the optimizer works in). If the range is so
+    // saturated that fewer than k points clear the history filter, a
+    // second pass tops the batch up ignoring history, so a round always
+    // has k jobs. Feed results back with record().
+    std::vector<double> propose_batch(int k, double min_gap = 0.02) {
+        const int N = 200;
+        Vec xs(N);
+        for (int i = 0; i < N; ++i)
+            xs[i] = bounds_.first + (bounds_.second - bounds_.first) * i / double(N - 1);
+
+        Vec mean, std;
+        predict_high(xs, mean, std);
+
+        double best = !high_y_.empty()
+            ? *std::min_element(high_y_.begin(), high_y_.end())
+            : *std::min_element(low_y_.begin(), low_y_.end());
+
+        std::vector<int> order(N);
+        for (int i = 0; i < N; ++i) order[i] = i;
+        //Sort the indexes xs accroding to their score
+        std::sort(order.begin(), order.end(), [&](int a, int b) {
+            return (best - mean[a] + std[a]) > (best - mean[b] + std[b]);
+        });
+
+        std::vector<double> batch;
+
+        auto far_enough = [&](double x, bool check_history) {
+            for (double picked : batch)
+                if (std::fabs(picked - x) < min_gap) return false;
+            if (check_history) {
+                for (double seen : high_X_)
+                    if (std::fabs(seen - x) < min_gap) return false;
+                for (double seen : low_X_)
+                    if (std::fabs(seen - x) < min_gap) return false;
+            }
+            return true;
+        };
+
+        // Pass 1: space new points from each other and from all past evals.
+        for (int idx : order) {
+            if (far_enough(xs[idx], /*check_history=*/true)) batch.push_back(xs[idx]);
+            if (static_cast<int>(batch.size()) == k) return batch;
+        }
+        // Pass 2: range nearly saturated -- top up ignoring history so the
+        // round still gets k jobs (they will just sit closer to past points).
+        for (int idx : order) {
+            if (far_enough(xs[idx], /*check_history=*/false)) batch.push_back(xs[idx]);
+            if (static_cast<int>(batch.size()) == k) break;
+        }
+        return batch;
+    }
+
+    // Records an observation obtained some other way (e.g. a CAF worker
+    // actor's training run) without calling low_()/high_() -- use this
+    // instead of evaluate() when the caller already has y.
+    void record(double x, int fidelity, double y) {
+        if (fidelity == 0) { low_X_.push_back(x); low_y_.push_back(y); }
+        else                { high_X_.push_back(x); high_y_.push_back(y); }
     }
 
     // Runs the sweep, printing each evaluation the way the Python version

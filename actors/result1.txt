@@ -1,0 +1,879 @@
+DEVICE= cuda
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.05) on cuda...
+
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=1.275) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=2.5) on cuda...
+
+Epoch 01 | ELBO 6.03e+01  Recon 5.96e+01  KL 5.58e-01
+Epoch 01 | ELBO 5.98e+01  Recon 5.93e+01  KL 8.79e+00
+Epoch 01 | ELBO 6.08e+01  Recon 6.02e+01  KL 2.59e-01
+          Val | ELBO 4.79e+01  Recon 4.73e+01  KL 1.13e+01  SSIM 0.40  PSNR 12.19 dB
+          Val | ELBO 5.18e+01  Recon 5.09e+01  KL 7.19e-01  SSIM 0.37  PSNR 11.88 dB
+          Val | ELBO 5.25e+01  Recon 5.16e+01  KL 3.94e-01  SSIM 0.37  PSNR 11.82 dB
+Epoch 02 | ELBO 4.22e+01  Recon 4.12e+01  KL 2.03e+01
+Epoch 02 | ELBO 5.04e+01  Recon 4.90e+01  KL 1.16e+00
+          Val | ELBO 3.66e+01  Recon 3.51e+01  KL 2.92e+01  SSIM 0.58  PSNR 13.49 dB
+          Val | ELBO 4.93e+01  Recon 4.72e+01  KL 1.69e+00  SSIM 0.42  PSNR 12.21 dB
+Epoch 02 | ELBO 5.16e+01  Recon 5.03e+01  KL 5.51e-01
+          Val | ELBO 5.13e+01  Recon 4.96e+01  KL 6.63e-01  SSIM 0.40  PSNR 11.99 dB
+Epoch 03 | ELBO 3.13e+01  Recon 2.94e+01  KL 3.85e+01
+          Val | ELBO 2.72e+01  Recon 2.50e+01  KL 4.49e+01  SSIM 0.70  PSNR 14.97 dB
+Epoch 03 | ELBO 4.85e+01  Recon 4.59e+01  KL 2.00e+00
+          Val | ELBO 4.75e+01  Recon 4.42e+01  KL 2.53e+00  SSIM 0.45  PSNR 12.49 dB
+Epoch 03 | ELBO 5.08e+01  Recon 4.88e+01  KL 8.31e-01
+          Val | ELBO 5.05e+01  Recon 4.80e+01  KL 1.00e+00  SSIM 0.40  PSNR 12.13 dB
+Epoch 04 | ELBO 2.52e+01  Recon 2.29e+01  KL 4.62e+01
+          Val | ELBO 2.30e+01  Recon 2.05e+01  KL 4.97e+01  SSIM 0.75  PSNR 15.83 dB
+Epoch 04 | ELBO 4.62e+01  Recon 4.25e+01  KL 2.89e+00
+          Val | ELBO 4.48e+01  Recon 4.00e+01  KL 3.80e+00  SSIM 0.49  PSNR 12.93 dB
+Epoch 04 | ELBO 5.02e+01  Recon 4.75e+01  KL 1.10e+00
+          Val | ELBO 5.00e+01  Recon 4.70e+01  KL 1.20e+00  SSIM 0.41  PSNR 12.22 dB
+Epoch 05 | ELBO 2.17e+01  Recon 1.91e+01  KL 5.05e+01
+          Val | ELBO 2.00e+01  Recon 1.75e+01  KL 5.13e+01  SSIM 0.78  PSNR 16.52 dB
+
+Encoding test set deterministically (z = mu)...
+Epoch 05 | ELBO 4.32e+01  Recon 3.77e+01  KL 4.36e+00
+Saved latent_vectors_beta0.05_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.05_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.218  0.02  -0.238  0.002]  ...
+  Std   : [0.902 0.711 1.61  1.911]  ...
+  Min   : -6.478
+  Max   : 5.581
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+          Val | ELBO 4.14e+01  Recon 3.48e+01  KL 5.17e+00  SSIM 0.56  PSNR 13.52 dB
+
+Encoding test set deterministically (z = mu)...
+epoch 0 | loss 1.8204
+Saved latent_vectors_beta1.275_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta1.275_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.017 -0.07  -0.045  0.054]  ...
+  Std   : [0.173 0.303 0.593 0.236]  ...
+  Min   : -3.576
+  Max   : 2.877
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1271
+epoch 1 | loss 1.8315
+Epoch 05 | ELBO 4.95e+01  Recon 4.61e+01  KL 1.36e+00
+          Val | ELBO 4.87e+01  Recon 4.49e+01  KL 1.52e+00  SSIM 0.43  PSNR 12.42 dB
+
+Encoding test set deterministically (z = mu)...
+epoch 1 | loss 1.1087
+Saved latent_vectors_beta2.5_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta2.5_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.005 -0.008  0.007  0.006]  ...
+  Std   : [0.102 0.081 0.093 0.052]  ...
+  Min   : -1.923
+  Max   : 3.130
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.0357
+epoch 2 | loss 1.8466
+epoch 2 | loss 1.1221
+epoch 1 | loss 1.0374
+epoch 3 | loss 1.8302
+epoch 3 | loss 1.1064
+epoch 2 | loss 1.0155
+epoch 4 | loss 1.8226
+epoch 4 | loss 1.1093
+epoch 3 | loss 1.0271
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+epoch 4 | loss 1.0204
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 9.62e-02
+
+MMD Score (Original Space): 7.05e-02
+
+MMD Score (Original Space): 1.13e-01
+beta=0.05  MMD=0.0961713  log10=-1.01695  (GP had predicted log10~nan)
+beta=1.275  MMD=0.0704898  log10=-1.15187  (GP had predicted log10~-0.897458)
+beta=2.5  MMD=0.112697  log10=-0.948086  (GP had predicted log10~-1.01617)
+--- round 0 : 3 full runs ---
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=1.19497) on cuda...
+
+DEVICE= cuda
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=1.09648) on cuda...
+
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=1.14573) on cuda...
+
+Epoch 01 | ELBO 5.99e+01  Recon 5.90e+01  KL 7.26e-01
+Epoch 01 | ELBO 6.02e+01  Recon 5.94e+01  KL 7.96e-01
+          Val | ELBO 5.11e+01  Recon 5.00e+01  KL 9.11e-01  SSIM 0.38  PSNR 11.95 dB
+          Val | ELBO 5.10e+01  Recon 4.98e+01  KL 1.05e+00  SSIM 0.39  PSNR 11.97 dB
+Epoch 01 | ELBO 6.01e+01  Recon 5.93e+01  KL 7.51e-01
+          Val | ELBO 5.13e+01  Recon 5.02e+01  KL 9.51e-01  SSIM 0.37  PSNR 11.93 dB
+Epoch 02 | ELBO 5.01e+01  Recon 4.86e+01  KL 1.28e+00
+          Val | ELBO 4.89e+01  Recon 4.66e+01  KL 1.92e+00  SSIM 0.43  PSNR 12.26 dB
+Epoch 02 | ELBO 4.96e+01  Recon 4.79e+01  KL 1.55e+00
+          Val | ELBO 4.85e+01  Recon 4.62e+01  KL 2.10e+00  SSIM 0.44  PSNR 12.30 dB
+Epoch 02 | ELBO 4.99e+01  Recon 4.83e+01  KL 1.40e+00
+          Val | ELBO 4.86e+01  Recon 4.63e+01  KL 2.02e+00  SSIM 0.42  PSNR 12.29 dB
+Epoch 03 | ELBO 4.82e+01  Recon 4.55e+01  KL 2.24e+00
+          Val | ELBO 4.72e+01  Recon 4.36e+01  KL 2.99e+00  SSIM 0.46  PSNR 12.55 dB
+Epoch 03 | ELBO 4.74e+01  Recon 4.43e+01  KL 2.80e+00
+          Val | ELBO 4.54e+01  Recon 4.12e+01  KL 3.83e+00  SSIM 0.48  PSNR 12.79 dB
+Epoch 03 | ELBO 4.78e+01  Recon 4.49e+01  KL 2.52e+00
+          Val | ELBO 4.64e+01  Recon 4.26e+01  KL 3.29e+00  SSIM 0.46  PSNR 12.65 dB
+Epoch 04 | ELBO 4.57e+01  Recon 4.14e+01  KL 3.65e+00
+          Val | ELBO 4.42e+01  Recon 3.87e+01  KL 4.54e+00  SSIM 0.52  PSNR 13.06 dB
+Epoch 04 | ELBO 4.39e+01  Recon 3.88e+01  KL 4.60e+00
+          Val | ELBO 4.16e+01  Recon 3.55e+01  KL 5.55e+00  SSIM 0.55  PSNR 13.44 dB
+Epoch 04 | ELBO 4.46e+01  Recon 3.97e+01  KL 4.32e+00
+          Val | ELBO 4.24e+01  Recon 3.61e+01  KL 5.49e+00  SSIM 0.55  PSNR 13.37 dB
+Epoch 05 | ELBO 4.22e+01  Recon 3.62e+01  KL 5.02e+00
+          Val | ELBO 4.01e+01  Recon 3.35e+01  KL 5.51e+00  SSIM 0.58  PSNR 13.70 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta1.19497_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta1.19497_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.035  0.013 -0.004 -0.011]  ...
+  Std   : [0.343 0.314 0.148 0.138]  ...
+  Min   : -3.278
+  Max   : 3.734
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1192
+Epoch 05 | ELBO 4.04e+01  Recon 3.38e+01  KL 5.98e+00
+          Val | ELBO 3.86e+01  Recon 3.13e+01  KL 6.60e+00  SSIM 0.60  PSNR 13.98 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta1.09648_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta1.09648_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.062 -0.013 -0.007 -0.018]  ...
+  Std   : [0.977 0.194 0.214 0.262]  ...
+  Min   : -3.299
+  Max   : 3.287
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1213
+Epoch 05 | ELBO 4.06e+01  Recon 3.39e+01  KL 5.86e+00
+epoch 1 | loss 1.1064
+          Val | ELBO 3.85e+01  Recon 3.11e+01  KL 6.51e+00  SSIM 0.61  PSNR 14.02 dB
+
+Encoding test set deterministically (z = mu)...
+epoch 1 | loss 1.1304
+Saved latent_vectors_beta1.14573_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta1.14573_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.015 -0.03   0.016  0.008]  ...
+  Std   : [0.239 0.168 0.074 0.067]  ...
+  Min   : -3.371
+  Max   : 3.625
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1233
+epoch 2 | loss 1.1175
+epoch 2 | loss 1.1287
+epoch 1 | loss 1.1308
+epoch 3 | loss 1.1232
+epoch 3 | loss 1.1315
+epoch 2 | loss 1.1185
+epoch 4 | loss 1.1274
+epoch 4 | loss 1.1026
+epoch 3 | loss 1.1312
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+epoch 4 | loss 1.1174
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 6.64e-02
+
+MMD Score (Original Space): 6.54e-02
+
+MMD Score (Original Space): 6.11e-02
+beta=1.09648  MMD=0.0653626  log10=-1.18467  (GP had predicted log10~-1.15359)
+beta=1.19497  MMD=0.0663799  log10=-1.17796  (GP had predicted log10~-1.1682)
+beta=1.14573  MMD=0.0610576  log10=-1.21426  (GP had predicted log10~-1.17747)
+--- round 1 : 3 full runs ---
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.76407) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.813317) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.862563) on cuda...
+
+Epoch 01 | ELBO 5.97e+01  Recon 5.88e+01  KL 1.18e+00
+Epoch 01 | ELBO 5.96e+01  Recon 5.87e+01  KL 1.09e+00
+          Val | ELBO 5.05e+01  Recon 4.95e+01  KL 1.28e+00  SSIM 0.38  PSNR 12.00 dB
+          Val | ELBO 5.05e+01  Recon 4.95e+01  KL 1.24e+00  SSIM 0.39  PSNR 12.00 dB
+Epoch 01 | ELBO 6.00e+01  Recon 5.93e+01  KL 8.77e-01
+          Val | ELBO 5.11e+01  Recon 5.00e+01  KL 1.26e+00  SSIM 0.36  PSNR 11.95 dB
+Epoch 02 | ELBO 4.87e+01  Recon 4.69e+01  KL 2.26e+00
+          Val | ELBO 4.69e+01  Recon 4.42e+01  KL 3.49e+00  SSIM 0.45  PSNR 12.48 dB
+Epoch 02 | ELBO 4.87e+01  Recon 4.68e+01  KL 2.27e+00
+          Val | ELBO 4.66e+01  Recon 4.36e+01  KL 3.63e+00  SSIM 0.46  PSNR 12.54 dB
+Epoch 02 | ELBO 4.93e+01  Recon 4.77e+01  KL 1.86e+00
+          Val | ELBO 4.75e+01  Recon 4.51e+01  KL 2.77e+00  SSIM 0.44  PSNR 12.40 dB
+Epoch 03 | ELBO 4.37e+01  Recon 3.97e+01  KL 5.18e+00
+          Val | ELBO 4.03e+01  Recon 3.49e+01  KL 7.08e+00  SSIM 0.57  PSNR 13.52 dB
+Epoch 03 | ELBO 4.44e+01  Recon 4.04e+01  KL 4.91e+00
+          Val | ELBO 4.16e+01  Recon 3.63e+01  KL 6.42e+00  SSIM 0.54  PSNR 13.34 dB
+Epoch 03 | ELBO 4.56e+01  Recon 4.21e+01  KL 4.06e+00
+          Val | ELBO 4.33e+01  Recon 3.84e+01  KL 5.64e+00  SSIM 0.52  PSNR 13.10 dB
+Epoch 04 | ELBO 3.89e+01  Recon 3.32e+01  KL 7.56e+00
+          Val | ELBO 3.72e+01  Recon 3.09e+01  KL 8.17e+00  SSIM 0.62  PSNR 14.04 dB
+Epoch 04 | ELBO 3.96e+01  Recon 3.38e+01  KL 7.13e+00
+          Val | ELBO 3.74e+01  Recon 3.12e+01  KL 7.62e+00  SSIM 0.60  PSNR 14.01 dB
+Epoch 04 | ELBO 4.12e+01  Recon 3.55e+01  KL 6.66e+00
+          Val | ELBO 3.93e+01  Recon 3.29e+01  KL 7.49e+00  SSIM 0.59  PSNR 13.78 dB
+Epoch 05 | ELBO 3.61e+01  Recon 2.97e+01  KL 8.41e+00
+          Val | ELBO 3.45e+01  Recon 2.79e+01  KL 8.73e+00  SSIM 0.65  PSNR 14.49 dB
+
+Encoding test set deterministically (z = mu)...
+Epoch 05 | ELBO 3.61e+01  Recon 2.97e+01  KL 7.95e+00
+          Val | ELBO 3.46e+01  Recon 2.79e+01  KL 8.24e+00  SSIM 0.65  PSNR 14.48 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.76407_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.76407_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.034  0.005 -0.003  0.003]  ...
+  Std   : [0.214 0.085 0.078 0.103]  ...
+  Min   : -3.035
+  Max   : 3.549
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+Saved latent_vectors_beta0.813317_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.813317_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.01  -0.005 -0.    -0.022]  ...
+  Std   : [0.148 0.291 0.111 0.364]  ...
+  Min   : -3.684
+  Max   : 3.368
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1597
+epoch 0 | loss 1.1512
+epoch 1 | loss 1.1612
+epoch 1 | loss 1.1336
+Epoch 05 | ELBO 3.78e+01  Recon 3.09e+01  KL 7.91e+00
+          Val | ELBO 3.60e+01  Recon 2.87e+01  KL 8.46e+00  SSIM 0.64  PSNR 14.37 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.862563_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.862563_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.021 -0.015  0.014  0.022]  ...
+  Std   : [0.336 0.249 0.444 0.114]  ...
+  Min   : -3.464
+  Max   : 3.606
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1703
+epoch 2 | loss 1.1579
+epoch 2 | loss 1.1455
+epoch 1 | loss 1.1599
+epoch 3 | loss 1.1619
+epoch 3 | loss 1.1537
+epoch 2 | loss 1.1573
+epoch 4 | loss 1.1550
+epoch 4 | loss 1.1323
+
+Evaluating the flow model:
+epoch 3 | loss 1.1587
+
+Evaluating the flow model:
+epoch 4 | loss 1.1561
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 5.42e-02
+
+MMD Score (Original Space): 4.85e-02
+
+MMD Score (Original Space): 6.12e-02
+beta=0.76407  MMD=0.0541734  log10=-1.26621  (GP had predicted log10~-1.21702)
+beta=0.813317  MMD=0.0484592  log10=-1.31462  (GP had predicted log10~-1.25481)
+beta=0.862563  MMD=0.0612038  log10=-1.21322  (GP had predicted log10~-1.27221)
+--- round 2 : 3 full runs ---
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.665578) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.714824) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.76407) on cuda...
+
+Epoch 01 | ELBO 6.01e+01  Recon 5.94e+01  KL 9.94e-01
+Epoch 01 | ELBO 5.96e+01  Recon 5.88e+01  KL 1.31e+00
+Epoch 01 | ELBO 6.00e+01  Recon 5.91e+01  KL 1.20e+00
+          Val | ELBO 5.09e+01  Recon 4.99e+01  KL 1.49e+00  SSIM 0.36  PSNR 11.97 dB
+          Val | ELBO 5.02e+01  Recon 4.91e+01  KL 1.62e+00  SSIM 0.39  PSNR 12.03 dB
+          Val | ELBO 5.04e+01  Recon 4.93e+01  KL 1.49e+00  SSIM 0.39  PSNR 12.02 dB
+Epoch 02 | ELBO 4.89e+01  Recon 4.73e+01  KL 2.20e+00
+          Val | ELBO 4.71e+01  Recon 4.48e+01  KL 3.25e+00  SSIM 0.44  PSNR 12.43 dB
+Epoch 02 | ELBO 4.87e+01  Recon 4.70e+01  KL 2.26e+00
+          Val | ELBO 4.70e+01  Recon 4.46e+01  KL 3.24e+00  SSIM 0.45  PSNR 12.45 dB
+Epoch 02 | ELBO 4.85e+01  Recon 4.68e+01  KL 2.47e+00
+          Val | ELBO 4.66e+01  Recon 4.42e+01  KL 3.60e+00  SSIM 0.44  PSNR 12.49 dB
+Epoch 03 | ELBO 4.56e+01  Recon 4.25e+01  KL 4.29e+00
+          Val | ELBO 4.33e+01  Recon 3.94e+01  KL 5.52e+00  SSIM 0.51  PSNR 12.99 dB
+Epoch 03 | ELBO 4.45e+01  Recon 4.10e+01  KL 4.67e+00
+          Val | ELBO 4.14e+01  Recon 3.66e+01  KL 6.19e+00  SSIM 0.54  PSNR 13.30 dB
+Epoch 03 | ELBO 4.38e+01  Recon 4.00e+01  KL 5.59e+00
+          Val | ELBO 4.04e+01  Recon 3.53e+01  KL 7.53e+00  SSIM 0.57  PSNR 13.46 dB
+Epoch 04 | ELBO 4.07e+01  Recon 3.57e+01  KL 6.98e+00
+          Val | ELBO 3.77e+01  Recon 3.18e+01  KL 8.20e+00  SSIM 0.60  PSNR 13.91 dB
+Epoch 04 | ELBO 3.95e+01  Recon 3.39e+01  KL 7.30e+00
+          Val | ELBO 3.77e+01  Recon 3.14e+01  KL 8.27e+00  SSIM 0.61  PSNR 13.98 dB
+Epoch 04 | ELBO 3.80e+01  Recon 3.25e+01  KL 8.32e+00
+          Val | ELBO 3.53e+01  Recon 2.94e+01  KL 8.98e+00  SSIM 0.63  PSNR 14.27 dB
+Epoch 05 | ELBO 3.63e+01  Recon 3.02e+01  KL 8.52e+00
+          Val | ELBO 3.46e+01  Recon 2.83e+01  KL 8.82e+00  SSIM 0.64  PSNR 14.43 dB
+
+Encoding test set deterministically (z = mu)...
+Epoch 05 | ELBO 3.65e+01  Recon 3.02e+01  KL 8.27e+00
+Saved latent_vectors_beta0.714824_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.714824_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.008  0.025 -0.012  0.014]  ...
+          Val | ELBO 3.48e+01  Recon 2.82e+01  KL 8.63e+00  SSIM 0.65  PSNR 14.44 dB
+
+Encoding test set deterministically (z = mu)...
+  Std   : [0.374 0.371 0.383 0.164]  ...
+  Min   : -3.338
+  Max   : 3.797
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1658
+Saved latent_vectors_beta0.76407_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.76407_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.002  0.07  -0.013  0.042]  ...
+  Std   : [0.182 0.879 0.092 0.156]  ...
+  Min   : -3.291
+  Max   : 3.438
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1517
+Epoch 05 | ELBO 3.41e+01  Recon 2.80e+01  KL 9.23e+00
+          Val | ELBO 3.28e+01  Recon 2.64e+01  KL 9.63e+00  SSIM 0.67  PSNR 14.73 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.665578_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.665578_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.036 -0.006  0.081 -0.003]  ...
+  Std   : [0.103 0.287 0.914 0.332]  ...
+  Min   : -3.488
+  Max   : 3.588
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1547
+epoch 1 | loss 1.1555
+epoch 1 | loss 1.1666
+epoch 1 | loss 1.1601
+epoch 2 | loss 1.1546
+epoch 2 | loss 1.1704
+epoch 3 | loss 1.1425
+epoch 2 | loss 1.1483
+epoch 3 | loss 1.1749
+epoch 4 | loss 1.1679
+epoch 4 | loss 1.1588
+epoch 3 | loss 1.1441
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+epoch 4 | loss 1.1553
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 5.40e-02
+
+MMD Score (Original Space): 5.61e-02
+
+MMD Score (Original Space): 4.51e-02
+beta=0.76407  MMD=0.0560793  log10=-1.2512  (GP had predicted log10~-1.2664)
+beta=0.714824  MMD=0.0540113  log10=-1.26752  (GP had predicted log10~-1.26348)
+beta=0.665578  MMD=0.0450894  log10=-1.34593  (GP had predicted log10~-1.26343)
+--- round 3 : 3 full runs ---
+DEVICE= cuda
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.677889) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.628643) on cuda...
+
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.727136) on cuda...
+
+Epoch 01 | ELBO 6.00e+01  Recon 5.91e+01  KL 1.18e+00
+Epoch 01 | ELBO 5.98e+01  Recon 5.89e+01  KL 1.23e+00
+Epoch 01 | ELBO 5.93e+01  Recon 5.83e+01  KL 1.58e+00
+          Val | ELBO 5.04e+01  Recon 4.94e+01  KL 1.39e+00  SSIM 0.39  PSNR 12.01 dB
+          Val | ELBO 5.02e+01  Recon 4.92e+01  KL 1.54e+00  SSIM 0.39  PSNR 12.02 dB
+          Val | ELBO 5.01e+01  Recon 4.89e+01  KL 1.85e+00  SSIM 0.39  PSNR 12.05 dB
+Epoch 02 | ELBO 4.80e+01  Recon 4.62e+01  KL 2.75e+00
+Epoch 02 | ELBO 4.76e+01  Recon 4.56e+01  KL 3.14e+00
+Epoch 02 | ELBO 4.86e+01  Recon 4.68e+01  KL 2.38e+00
+          Val | ELBO 4.62e+01  Recon 4.36e+01  KL 3.94e+00  SSIM 0.46  PSNR 12.55 dB
+          Val | ELBO 4.69e+01  Recon 4.44e+01  KL 3.34e+00  SSIM 0.44  PSNR 12.47 dB
+          Val | ELBO 4.53e+01  Recon 4.24e+01  KL 4.61e+00  SSIM 0.47  PSNR 12.67 dB
+Epoch 03 | ELBO 4.22e+01  Recon 3.82e+01  KL 6.47e+00
+Epoch 03 | ELBO 4.43e+01  Recon 4.06e+01  KL 5.09e+00
+Epoch 03 | ELBO 4.36e+01  Recon 3.97e+01  KL 5.74e+00
+          Val | ELBO 3.89e+01  Recon 3.38e+01  KL 8.11e+00  SSIM 0.57  PSNR 13.66 dB
+          Val | ELBO 4.11e+01  Recon 3.60e+01  KL 7.00e+00  SSIM 0.55  PSNR 13.38 dB
+          Val | ELBO 4.08e+01  Recon 3.57e+01  KL 7.49e+00  SSIM 0.56  PSNR 13.42 dB
+Epoch 04 | ELBO 3.68e+01  Recon 3.12e+01  KL 8.93e+00
+          Val | ELBO 3.48e+01  Recon 2.87e+01  KL 9.68e+00  SSIM 0.64  PSNR 14.37 dB
+Epoch 04 | ELBO 3.90e+01  Recon 3.34e+01  KL 8.25e+00
+Epoch 04 | ELBO 3.94e+01  Recon 3.39e+01  KL 7.63e+00
+          Val | ELBO 3.70e+01  Recon 3.09e+01  KL 8.99e+00  SSIM 0.60  PSNR 14.04 dB
+          Val | ELBO 3.73e+01  Recon 3.13e+01  KL 8.29e+00  SSIM 0.61  PSNR 13.99 dB
+Epoch 05 | ELBO 3.37e+01  Recon 2.75e+01  KL 9.87e+00
+          Val | ELBO 3.24e+01  Recon 2.60e+01  KL 1.02e+01  SSIM 0.68  PSNR 14.80 dB
+
+Encoding test set deterministically (z = mu)...
+Epoch 05 | ELBO 3.56e+01  Recon 2.94e+01  KL 9.21e+00
+Epoch 05 | ELBO 3.58e+01  Recon 2.96e+01  KL 8.49e+00
+          Val | ELBO 3.40e+01  Recon 2.76e+01  KL 9.51e+00  SSIM 0.64  PSNR 14.54 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.628643_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.628643_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.017  0.006 -0.126  0.014]  ...
+          Val | ELBO 3.38e+01  Recon 2.74e+01  KL 8.77e+00  SSIM 0.66  PSNR 14.57 dB
+
+Encoding test set deterministically (z = mu)...
+  Std   : [0.112 0.148 0.988 0.212]  ...
+  Min   : -3.543
+  Max   : 4.041
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1686
+Saved latent_vectors_beta0.677889_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.677889_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.066  0.022  0.027 -0.001]  ...
+  Std   : [1.151 0.524 0.293 0.297]  ...
+  Min   : -3.701
+  Max   : 3.309
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+Saved latent_vectors_beta0.727136_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.727136_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+epoch 0 | loss 1.1943
+  Mean  : [ 0.023  0.017 -0.017  0.032]  ...
+  Std   : [0.299 0.215 0.11  0.678]  ...
+  Min   : -3.758
+  Max   : 3.461
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1323
+epoch 1 | loss 1.1871
+epoch 1 | loss 1.1709
+epoch 1 | loss 1.1584
+epoch 2 | loss 1.1708
+epoch 2 | loss 1.1698
+epoch 2 | loss 1.1512
+epoch 3 | loss 1.1848
+epoch 3 | loss 1.1680
+epoch 3 | loss 1.1314
+epoch 4 | loss 1.1592
+epoch 4 | loss 1.1760
+epoch 4 | loss 1.1473
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 4.47e-02
+
+MMD Score (Original Space): 5.65e-02
+
+MMD Score (Original Space): 4.99e-02
+beta=0.628643  MMD=0.044652  log10=-1.35016  (GP had predicted log10~-1.27986)
+beta=0.727136  MMD=0.0498686  log10=-1.30217  (GP had predicted log10~-1.29193)
+beta=0.677889  MMD=0.0564562  log10=-1.24829  (GP had predicted log10~-1.29552)
+--- round 4 : 3 full runs ---
+DEVICE= cuda
+DEVICE= cuda
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.714824) on cuda...
+
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.665578) on cuda...
+
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.616332) on cuda...
+
+Epoch 01 | ELBO 5.97e+01  Recon 5.89e+01  KL 1.33e+00
+Epoch 01 | ELBO 6.02e+01  Recon 5.95e+01  KL 1.02e+00
+Epoch 01 | ELBO 6.01e+01  Recon 5.94e+01  KL 1.23e+00
+          Val | ELBO 5.07e+01  Recon 4.97e+01  KL 1.44e+00  SSIM 0.36  PSNR 11.98 dB
+          Val | ELBO 5.03e+01  Recon 4.93e+01  KL 1.57e+00  SSIM 0.38  PSNR 12.02 dB
+          Val | ELBO 5.04e+01  Recon 4.93e+01  KL 1.67e+00  SSIM 0.37  PSNR 12.01 dB
+Epoch 02 | ELBO 4.86e+01  Recon 4.69e+01  KL 2.37e+00
+Epoch 02 | ELBO 4.85e+01  Recon 4.68e+01  KL 2.48e+00
+          Val | ELBO 4.68e+01  Recon 4.44e+01  KL 3.45e+00  SSIM 0.44  PSNR 12.47 dB
+          Val | ELBO 4.67e+01  Recon 4.44e+01  KL 3.49e+00  SSIM 0.44  PSNR 12.47 dB
+Epoch 02 | ELBO 4.81e+01  Recon 4.63e+01  KL 2.90e+00
+          Val | ELBO 4.57e+01  Recon 4.29e+01  KL 4.58e+00  SSIM 0.47  PSNR 12.62 dB
+Epoch 03 | ELBO 4.41e+01  Recon 4.03e+01  KL 5.25e+00
+          Val | ELBO 4.06e+01  Recon 3.54e+01  KL 7.28e+00  SSIM 0.56  PSNR 13.46 dB
+Epoch 03 | ELBO 4.33e+01  Recon 3.96e+01  KL 6.04e+00
+Epoch 03 | ELBO 4.48e+01  Recon 4.16e+01  KL 4.77e+00
+          Val | ELBO 4.04e+01  Recon 3.56e+01  KL 7.91e+00  SSIM 0.55  PSNR 13.43 dB
+          Val | ELBO 4.20e+01  Recon 3.79e+01  KL 6.16e+00  SSIM 0.52  PSNR 13.16 dB
+Epoch 04 | ELBO 3.86e+01  Recon 3.30e+01  KL 7.86e+00
+          Val | ELBO 3.65e+01  Recon 3.05e+01  KL 8.37e+00  SSIM 0.62  PSNR 14.10 dB
+Epoch 04 | ELBO 3.79e+01  Recon 3.25e+01  KL 8.86e+00
+          Val | ELBO 3.54e+01  Recon 2.95e+01  KL 9.63e+00  SSIM 0.62  PSNR 14.25 dB
+Epoch 04 | ELBO 3.96e+01  Recon 3.45e+01  KL 7.57e+00
+          Val | ELBO 3.71e+01  Recon 3.13e+01  KL 8.76e+00  SSIM 0.61  PSNR 13.99 dB
+Epoch 05 | ELBO 3.54e+01  Recon 2.92e+01  KL 8.64e+00
+          Val | ELBO 3.40e+01  Recon 2.76e+01  KL 8.96e+00  SSIM 0.65  PSNR 14.54 dB
+
+Encoding test set deterministically (z = mu)...
+Epoch 05 | ELBO 3.39e+01  Recon 2.78e+01  KL 9.85e+00
+Saved latent_vectors_beta0.714824_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.714824_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+          Val | ELBO 3.21e+01  Recon 2.58e+01  KL 1.02e+01  SSIM 0.67  PSNR 14.83 dB
+
+Encoding test set deterministically (z = mu)...
+  Mean  : [ 0.04   0.029 -0.015  0.   ]  ...
+  Std   : [1.209 0.488 0.129 0.233]  ...
+  Min   : -3.542
+  Max   : 3.691
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1683
+Saved latent_vectors_beta0.616332_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.616332_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.009 -0.034  0.003 -0.017]  ...
+  Std   : [0.172 0.063 0.207 0.154]  ...
+  Min   : -3.655
+  Max   : 3.842
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1684
+Epoch 05 | ELBO 3.57e+01  Recon 2.96e+01  KL 9.08e+00
+          Val | ELBO 3.39e+01  Recon 2.75e+01  KL 9.66e+00  SSIM 0.65  PSNR 14.56 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.665578_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.665578_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.001  0.002  0.002 -0.002]  ...
+  Std   : [0.244 0.19  0.208 0.428]  ...
+  Min   : -3.705
+  Max   : 3.291
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1988
+epoch 1 | loss 1.1537
+epoch 1 | loss 1.1856
+epoch 1 | loss 1.1997
+epoch 2 | loss 1.1796
+epoch 2 | loss 1.1777
+epoch 2 | loss 1.2028
+epoch 3 | loss 1.1565
+epoch 3 | loss 1.1531
+epoch 3 | loss 1.1816
+epoch 4 | loss 1.1718
+epoch 4 | loss 1.1736
+epoch 4 | loss 1.2060
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 4.90e-02
+
+MMD Score (Original Space): 4.50e-02
+
+MMD Score (Original Space): 5.56e-02
+beta=0.714824  MMD=0.0489758  log10=-1.31002  (GP had predicted log10~-1.28842)
+beta=0.616332  MMD=0.0450236  log10=-1.34656  (GP had predicted log10~-1.29052)
+beta=0.665578  MMD=0.0556065  log10=-1.25487  (GP had predicted log10~-1.29831)
+--- round 5 : 3 full runs ---
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.616332) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.714824) on cuda...
+
+DEVICE= cuda
+# Parameters in VAE:  1116560
+Training VAE (latent_dim=64, β=0.665578) on cuda...
+
+Epoch 01 | ELBO 6.04e+01  Recon 5.97e+01  KL 1.19e+00
+Epoch 01 | ELBO 5.99e+01  Recon 5.92e+01  KL 1.09e+00
+          Val | ELBO 5.06e+01  Recon 4.97e+01  KL 1.41e+00  SSIM 0.37  PSNR 11.98 dB
+          Val | ELBO 5.05e+01  Recon 4.94e+01  KL 1.52e+00  SSIM 0.38  PSNR 12.00 dB
+Epoch 01 | ELBO 5.99e+01  Recon 5.91e+01  KL 1.19e+00
+          Val | ELBO 5.06e+01  Recon 4.96e+01  KL 1.50e+00  SSIM 0.36  PSNR 11.99 dB
+Epoch 02 | ELBO 4.83e+01  Recon 4.67e+01  KL 2.69e+00
+Epoch 02 | ELBO 4.83e+01  Recon 4.65e+01  KL 2.57e+00
+          Val | ELBO 4.63e+01  Recon 4.38e+01  KL 4.08e+00  SSIM 0.45  PSNR 12.53 dB
+          Val | ELBO 4.65e+01  Recon 4.40e+01  KL 3.50e+00  SSIM 0.45  PSNR 12.50 dB
+Epoch 02 | ELBO 4.86e+01  Recon 4.70e+01  KL 2.39e+00
+          Val | ELBO 4.68e+01  Recon 4.46e+01  KL 3.27e+00  SSIM 0.44  PSNR 12.45 dB
+Epoch 03 | ELBO 4.35e+01  Recon 3.99e+01  KL 5.89e+00
+Epoch 03 | ELBO 4.36e+01  Recon 3.96e+01  KL 5.51e+00
+          Val | ELBO 3.98e+01  Recon 3.48e+01  KL 7.99e+00  SSIM 0.56  PSNR 13.52 dB
+          Val | ELBO 4.00e+01  Recon 3.45e+01  KL 7.71e+00  SSIM 0.57  PSNR 13.57 dB
+Epoch 03 | ELBO 4.47e+01  Recon 4.14e+01  KL 4.87e+00
+          Val | ELBO 4.11e+01  Recon 3.65e+01  KL 6.94e+00  SSIM 0.54  PSNR 13.33 dB
+Epoch 04 | ELBO 3.81e+01  Recon 3.22e+01  KL 8.20e+00
+Epoch 04 | ELBO 3.78e+01  Recon 3.24e+01  KL 8.84e+00
+          Val | ELBO 3.58e+01  Recon 2.96e+01  KL 8.65e+00  SSIM 0.63  PSNR 14.23 dB
+          Val | ELBO 3.56e+01  Recon 2.96e+01  KL 9.76e+00  SSIM 0.63  PSNR 14.24 dB
+Epoch 04 | ELBO 3.88e+01  Recon 3.35e+01  KL 7.87e+00
+          Val | ELBO 3.65e+01  Recon 3.08e+01  KL 8.59e+00  SSIM 0.61  PSNR 14.06 dB
+Epoch 05 | ELBO 3.40e+01  Recon 2.80e+01  KL 9.76e+00
+Epoch 05 | ELBO 3.46e+01  Recon 2.81e+01  KL 8.99e+00
+          Val | ELBO 3.21e+01  Recon 2.58e+01  KL 1.02e+01  SSIM 0.67  PSNR 14.83 dB
+
+Encoding test set deterministically (z = mu)...
+          Val | ELBO 3.29e+01  Recon 2.62e+01  KL 9.34e+00  SSIM 0.67  PSNR 14.76 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.616332_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.616332_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.03  -0.042  0.01   0.022]  ...
+  Std   : [0.189 0.211 0.143 0.096]  ...
+  Min   : -3.831
+  Max   : 3.761
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1589
+Saved latent_vectors_beta0.714824_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.714824_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [ 0.016  0.01  -0.017 -0.078]  ...
+  Std   : [0.182 0.077 0.204 1.089]  ...
+  Min   : -3.442
+  Max   : 3.575
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 0 | loss 1.1491
+Epoch 05 | ELBO 3.51e+01  Recon 2.91e+01  KL 8.99e+00
+          Val | ELBO 3.34e+01  Recon 2.71e+01  KL 9.48e+00  SSIM 0.66  PSNR 14.61 dB
+
+Encoding test set deterministically (z = mu)...
+Saved latent_vectors_beta0.665578_hf.npy  shape=(10000, 64)
+Saved latent_labels_beta0.665578_hf.npy   shape=(10000,)
+
+── Latent vector stats (test set) ──
+  Mean  : [-0.017  0.011 -0.069 -0.002]  ...
+  Std   : [0.174 0.533 0.671 0.128]  ...
+  Min   : -3.656
+  Max   : 3.466
+
+Done learning latents.
+
+Training the Flow model:
+# Parameters in Flow Model:  230720
+epoch 1 | loss 1.1466
+epoch 0 | loss 1.1636
+epoch 1 | loss 1.1716
+epoch 1 | loss 1.1716
+epoch 2 | loss 1.1712
+epoch 2 | loss 1.1605
+epoch 3 | loss 1.1488
+epoch 2 | loss 1.1592
+epoch 3 | loss 1.1732
+epoch 4 | loss 1.1444
+epoch 3 | loss 1.1678
+epoch 4 | loss 1.1579
+
+Evaluating the flow model:
+epoch 4 | loss 1.1744
+
+Evaluating the flow model:
+
+Evaluating the flow model:
+
+MMD Score (Original Space): 4.44e-02
+
+MMD Score (Original Space): 4.45e-02
+
+MMD Score (Original Space): 5.14e-02
+beta=0.616332  MMD=0.044356  log10=-1.35305  (GP had predicted log10~-1.29315)
+beta=0.714824  MMD=0.0444677  log10=-1.35196  (GP had predicted log10~-1.29739)
+beta=0.665578  MMD=0.0514182  log10=-1.28888  (GP had predicted log10~-1.30376)
+
+best beta = 0.616332  MMD = 0.044356
+
+# beta      pred_MMD    log10_sd
+0.05   0.093176   1.00001
+0.1   0.0836316   1
+0.15   0.0759126   1
+0.2   0.0696661   1
+0.25   0.06462   1
+0.3   0.0605635   1
+0.35   0.0573329   1
+0.4   0.0548002   1
+0.45   0.0528658   1
+0.5   0.0514517   1
+0.55   0.0504971   1
+0.6   0.0499547   1
+0.65   0.0497879   1
+0.7   0.0499686   1
+0.75   0.0504753   1
+0.8   0.051292   1
+0.85   0.0524064   1
+0.9   0.053809   1
+0.95   0.0554925   1
+1   0.0574504   1
+1.05   0.0596763   1
+1.1   0.0621633   1
+1.15   0.064903   1
+1.2   0.0678846   1
+1.25   0.0710942   1
+1.3   0.0745146   1
+1.35   0.0781237   1
+1.4   0.081895   1
+1.45   0.0857964   1.00001
+1.5   0.0897904   1.00001
+1.55   0.0938341   1.00001
+1.6   0.0978792   1.00001
+1.65   0.101872   1.00001
+1.7   0.105757   1.00001
+1.75   0.109472   1.00001
+1.8   0.112956   1.00002
+1.85   0.116147   1.00002
+1.9   0.118984   1.00002
+1.95   0.121411   1.00002
+2   0.123374   1.00002
+2.05   0.124828   1.00002
+2.1   0.125737   1.00002
+2.15   0.126075   1.00002
+2.2   0.125824   1.00002
+2.25   0.124981   1.00002
+2.3   0.123553   1.00001
+2.35   0.121559   1.00001
+2.4   0.119029   1.00001
+2.45   0.116003   1.00001
+2.5   0.112528   1.00001
