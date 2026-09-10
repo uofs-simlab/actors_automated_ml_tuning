@@ -21,7 +21,20 @@
 
 #include "config.h" // CAF, job registration helpers, the `config` CLI class
 #include "mfbo.h"
+#include <chrono>
 #include <cmath>
+#include <ctime>
+
+namespace {
+// "YYYYmmdd_HHMMSS" local-time stamp, used to tag this run's output files
+// so successive runs don't overwrite each other.
+std::string run_stamp() {
+    std::time_t t = std::time(nullptr);
+    char buf[32];
+    std::strftime(buf, sizeof buf, "%Y%m%d_%H%M%S", std::localtime(&t));
+    return buf;
+}
+} // namespace
 
 // One job = one beta to train + evaluate at full fidelity. `u` is the
 // *normalized* value in [0,1] that mfbo::MFBO works in -- see denorm()
@@ -174,9 +187,13 @@ void run_round(caf::scoped_actor& self, actor_system& system, int num_gpus,
 void caf_main(actor_system& system, const config& cfg) {
     caf::scoped_actor self{system};
 
+    const std::string ts = run_stamp();
+    const auto wall_start = std::chrono::steady_clock::now();
+    self->println("mfbo_hf run {} started", ts);
+
     const int num_gpus = cfg.gpus;
     const int batch    = std::max(2, cfg.workers); // full runs in parallel per round
-    const int rounds   = 6;                         // acquisition rounds after the seed
+    const int rounds   = 10;                         // acquisition rounds after the seed
 
     // The constructor still wants low_()/high_() functors, but this driver
     // never calls evaluate()/run() -- every observation comes in through
@@ -187,6 +204,12 @@ void caf_main(actor_system& system, const config& cfg) {
                                 "fidelity is predict_high()");
     };
     mfbo::MFBO bo(unused, unused, {0.0, 1.0});
+
+    // GP kernel lengthscale, in normalized u units (u in [0,1] spans the
+    // whole log10(beta) range, i.e. 9 decades). ~0.1 => one correlation
+    // length is roughly one decade of beta. Raise it for a smoother/stiffer
+    // fit, lower it if the GP mean isn't tracking the sampled points.
+    bo.length = 0.1;
 
     std::vector<run_point> trace; // every completed high-fidelity run, for the CSV
 
@@ -225,26 +248,48 @@ void caf_main(actor_system& system, const config& cfg) {
                        log10_beta(grid[i]), denorm(grid[i]), std::pow(10.0, mean[i]), sd[i]);
 
     // ---- CSV dump for plot_mfbo.py -------------------------------------
+    // Build each CSV once, then write it to a timestamped name (kept per run)
+    // and to a stable "latest" name (what plot_mfbo.py reads by default).
+
     // runs: one row per actual high-fidelity run, in the order they finished.
-    {
-        std::ofstream f("mfbo_hf_runs.csv");
-        f << "order,log10_beta,beta,mmd,log10_mmd,gp_pred_log10_mmd_before\n";
-        for (size_t i = 0; i < trace.size(); ++i) {
-            const run_point& p = trace[i];
-            f << i << ',' << log10_beta(p.u) << ',' << denorm(p.u) << ','
-              << p.mmd << ',' << std::log10(std::max(p.mmd, 1e-6)) << ','
-              << p.pred_log10_before << '\n';
-        }
+    std::ostringstream runs_csv;
+    runs_csv << "order,log10_beta,beta,mmd,log10_mmd,gp_pred_log10_mmd_before\n";
+    for (size_t i = 0; i < trace.size(); ++i) {
+        const run_point& p = trace[i];
+        runs_csv << i << ',' << log10_beta(p.u) << ',' << denorm(p.u) << ','
+                 << p.mmd << ',' << std::log10(std::max(p.mmd, 1e-6)) << ','
+                 << p.pred_log10_before << '\n';
     }
     // pred: the GP's low-fidelity prediction curve + 1-sigma band (in log10 MMD).
-    {
-        std::ofstream f("mfbo_hf_pred.csv");
-        f << "log10_beta,beta,pred_mmd,pred_log10_mmd,log10_mmd_sd\n";
-        for (int i = 0; i < 50; ++i)
-            f << log10_beta(grid[i]) << ',' << denorm(grid[i]) << ','
-              << std::pow(10.0, mean[i]) << ',' << mean[i] << ',' << sd[i] << '\n';
-    }
-    self->println("\nwrote mfbo_hf_runs.csv, mfbo_hf_pred.csv  ->  ../.venv/bin/python3 ./plot_mfbo.py");
+    std::ostringstream pred_csv;
+    pred_csv << "log10_beta,beta,pred_mmd,pred_log10_mmd,log10_mmd_sd\n";
+    for (int i = 0; i < 50; ++i)
+        pred_csv << log10_beta(grid[i]) << ',' << denorm(grid[i]) << ','
+                 << std::pow(10.0, mean[i]) << ',' << mean[i] << ',' << sd[i] << '\n';
+
+    const std::string runs_path = "mfbo_hf_runs_" + ts + ".csv";
+    const std::string pred_path = "mfbo_hf_pred_" + ts + ".csv";
+    for (const std::string& p : {runs_path, std::string("mfbo_hf_runs.csv")})
+        std::ofstream(p) << runs_csv.str();
+    for (const std::string& p : {pred_path, std::string("mfbo_hf_pred.csv")})
+        std::ofstream(p) << pred_csv.str();
+    self->println("\nwrote {}, {} (and mfbo_hf_runs.csv / mfbo_hf_pred.csv)", runs_path, pred_path);
+
+    // Render the PNG straight away so a run always leaves a fresh graph
+    // behind -- no need to invoke plot_mfbo.py by hand. Best-effort: if
+    // matplotlib/the venv isn't there, the CSVs are still on disk.
+    const std::string png_path = "mfbo_hf_" + ts + ".png";
+    std::string cmd = "../.venv/bin/python3 ./plot_mfbo.py " + runs_path + " " + pred_path
+                    + " " + png_path + " && cp " + png_path + " mfbo_hf.png";
+    int rc = std::system(cmd.c_str());
+    if (rc == 0)
+        self->println("wrote {} (and mfbo_hf.png)", png_path);
+    else
+        self->println("plot_mfbo.py exited with {} -- CSVs are still there, plot them manually", rc);
+
+    const auto secs = std::chrono::duration_cast<std::chrono::seconds>(
+                          std::chrono::steady_clock::now() - wall_start).count();
+    self->println("mfbo_hf run {} finished in {} s ({} full runs)", ts, secs, trace.size());
     // self is a scoped_actor (blocking) -- returning from caf_main ends the program.
 }
 CAF_MAIN(io::middleman, caf::id_block::mfbo_hf_project)

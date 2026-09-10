@@ -100,7 +100,7 @@ public:
     using Fn = std::function<double(double)>;
 
     MFBO(Fn low, Fn high, std::pair<double, double> bounds)
-        : rho(1.0), low_(low), high_(high), bounds_(bounds) {}
+        : rho(1.0), length(0.1), low_(low), high_(high), bounds_(bounds) {}
 
     double evaluate(double x, int fidelity) {
         double val;
@@ -116,7 +116,13 @@ public:
         return val;
     }
 
-    static Mat kernel(const Vec& x1, const Vec& x2, double length = 1.0) {
+    // RBF kernel. `length` is the correlation lengthscale in x units (here
+    // the normalized [0,1] the optimizer works in): two inputs more than a
+    // few `length` apart are treated as unrelated. Small -> wiggly mean that
+    // hugs each point and wide uncertainty between points; large -> stiff,
+    // over-smoothed mean and collapsed uncertainty. gp() passes MFBO::length
+    // through explicitly; this default is only a fallback.
+    static Mat kernel(const Vec& x1, const Vec& x2, double length = 0.1) {
         Mat K(x1.size(), Vec(x2.size()));
         for (size_t i = 0; i < x1.size(); ++i)
             for (size_t j = 0; j < x2.size(); ++j) {
@@ -126,10 +132,12 @@ public:
         return K;
     }
 
-    // GP posterior mean/std of observations (X, y) evaluated at `query`.
-    static void gp(const Vec& X, const Vec& y, const Vec& query, Vec& mean_out, Vec& std_out) {
+    // GP posterior mean/std of observations (X, y) evaluated at `query`,
+    // using RBF lengthscale `length` (pass MFBO::length).
+    static void gp(const Vec& X, const Vec& y, const Vec& query, Vec& mean_out, Vec& std_out,
+                   double length) {
         size_t n = X.size();
-        Mat K = kernel(X, X);
+        Mat K = kernel(X, X, length);
         // Diagonal nugget: 1e-6 for numerical stability plus a noise term
         // scaled to the spread of y, since a few-epoch / small-batch training
         // run is a genuinely noisy observation, not a near-exact one.
@@ -142,7 +150,7 @@ public:
         double nugget = 1e-6 + 1e-3 * vy;
         for (size_t i = 0; i < n; ++i) K[i][i] += nugget;
 
-        Mat Kx = kernel(query, X); // m x n
+        Mat Kx = kernel(query, X, length); // m x n
         Mat L = cholesky(K);
 
         Vec alpha = cholesky_solve(L, y); // K @ alpha = y
@@ -188,7 +196,7 @@ public:
                 mean_out.assign(m, 0.0);
                 std_out.assign(m, 1.0);
             } else {
-                gp(high_X_, high_y_, xs, mean_out, std_out);
+                gp(high_X_, high_y_, xs, mean_out, std_out, length);
             }
             return;
         }
@@ -196,7 +204,7 @@ public:
         // -----------------------
         // Low-fidelity GP
         // -----------------------
-        gp(low_X_, low_y_, xs, low_mean, low_std);
+        gp(low_X_, low_y_, xs, low_mean, low_std, length);
 
         // -----------------------
         // High-fidelity correction
@@ -206,7 +214,7 @@ public:
             // posterior mean (AR1 correction) instead of re-running low_(),
             // which would launch a full training run on every acquisition step.
             Vec low_at_X, low_at_X_std;
-            gp(low_X_, low_y_, high_X_, low_at_X, low_at_X_std);
+            gp(low_X_, low_y_, high_X_, low_at_X, low_at_X_std, length);
 
             // High - rho * Low
             Vec discrepancy(high_X_.size());
@@ -214,7 +222,7 @@ public:
                 discrepancy[i] = high_y_[i] - rho * low_at_X[i];
 
             Vec correction, correction_std;
-            gp(high_X_, discrepancy, xs, correction, correction_std);
+            gp(high_X_, discrepancy, xs, correction, correction_std, length);
 
             mean_out.assign(m, 0.0);
             std_out.assign(m, 0.0);
@@ -371,6 +379,11 @@ public:
     const Vec& high_y() const { return high_y_; }
 
     double rho;
+
+    // RBF kernel lengthscale, in normalized x units. Public like `rho` so a
+    // driver can tune it after construction, e.g. `bo.length = 0.15;`.
+    // Default 0.1. See kernel() for what it does to the posterior.
+    double length;
 
 private:
     Fn low_;
