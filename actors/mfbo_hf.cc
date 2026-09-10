@@ -114,11 +114,21 @@ behavior worker_actor(stateful_actor<worker_state>* self, actor manager, int num
     };
 }
 
+// One completed high-fidelity run, kept so the driver can dump a CSV for
+// plotting: u (normalized), the measured MMD, and what the GP had predicted
+// (log10 MMD) for that beta just before this result was folded in.
+struct run_point {
+    double u;
+    double mmd;
+    double pred_log10_before;
+};
+
 // ---- one round: spawn `jobs.size()` workers, hand each one job, block ----
 // ---- until every result is back, fold each into the GP.               ----
 
 void run_round(caf::scoped_actor& self, actor_system& system, int num_gpus,
-                mfbo::MFBO& bo, const std::vector<job_t>& jobs) {
+                mfbo::MFBO& bo, const std::vector<job_t>& jobs,
+                std::vector<run_point>& trace) {
     int pending = static_cast<int>(jobs.size());
     std::vector<actor> workers;
     workers.reserve(jobs.size());
@@ -150,6 +160,7 @@ void run_round(caf::scoped_actor& self, actor_system& system, int num_gpus,
                 }
 
                 bo.record(job.u, /*fidelity=*/1, y); // only high fidelity is ever recorded
+                trace.push_back({job.u, mmd, approx});
                 self->println("log10_beta={}  beta={}  MMD={}  log10_mmd={}  (GP predicted log10_mmd~{})",
                                log10_beta(job.u), denorm(job.u), mmd, y, approx);
                 --pending;
@@ -177,12 +188,14 @@ void caf_main(actor_system& system, const config& cfg) {
     };
     mfbo::MFBO bo(unused, unused, {0.0, 1.0});
 
+    std::vector<run_point> trace; // every completed high-fidelity run, for the CSV
+
     // Seed round: a spread of betas across the range, all run at full fidelity
     // (there is no cheap tier to seed with here).
     std::vector<job_t> seed;
     for (int i = 0; i < batch; ++i)
         seed.push_back({batch > 1 ? i / double(batch - 1) : 0.5});
-    run_round(self, system, num_gpus, bo, seed);
+    run_round(self, system, num_gpus, bo, seed, trace);
 
     //Runs the proposed batch after seeding
     for (int r = 0; r < rounds; ++r) {
@@ -191,7 +204,7 @@ void caf_main(actor_system& system, const config& cfg) {
         jobs.reserve(xs.size());
         for (double x : xs) jobs.push_back({x});
         self->println("--- round {} : {} full runs ---", r, jobs.size());
-        run_round(self, system, num_gpus, bo, jobs);
+        run_round(self, system, num_gpus, bo, jobs, trace);
     }
 
     const mfbo::Vec& hx = bo.high_X();
@@ -210,6 +223,28 @@ void caf_main(actor_system& system, const config& cfg) {
     for (int i = 0; i < 50; ++i)
         self->println("{}   {}   {}   {}",
                        log10_beta(grid[i]), denorm(grid[i]), std::pow(10.0, mean[i]), sd[i]);
+
+    // ---- CSV dump for plot_mfbo.py -------------------------------------
+    // runs: one row per actual high-fidelity run, in the order they finished.
+    {
+        std::ofstream f("mfbo_hf_runs.csv");
+        f << "order,log10_beta,beta,mmd,log10_mmd,gp_pred_log10_mmd_before\n";
+        for (size_t i = 0; i < trace.size(); ++i) {
+            const run_point& p = trace[i];
+            f << i << ',' << log10_beta(p.u) << ',' << denorm(p.u) << ','
+              << p.mmd << ',' << std::log10(std::max(p.mmd, 1e-6)) << ','
+              << p.pred_log10_before << '\n';
+        }
+    }
+    // pred: the GP's low-fidelity prediction curve + 1-sigma band (in log10 MMD).
+    {
+        std::ofstream f("mfbo_hf_pred.csv");
+        f << "log10_beta,beta,pred_mmd,pred_log10_mmd,log10_mmd_sd\n";
+        for (int i = 0; i < 50; ++i)
+            f << log10_beta(grid[i]) << ',' << denorm(grid[i]) << ','
+              << std::pow(10.0, mean[i]) << ',' << mean[i] << ',' << sd[i] << '\n';
+    }
+    self->println("\nwrote mfbo_hf_runs.csv, mfbo_hf_pred.csv  ->  ../.venv/bin/python3 ./plot_mfbo.py");
     // self is a scoped_actor (blocking) -- returning from caf_main ends the program.
 }
 CAF_MAIN(io::middleman, caf::id_block::mfbo_hf_project)
