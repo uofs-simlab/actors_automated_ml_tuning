@@ -184,7 +184,7 @@ public:
         // -----------------------
         // Single-fidelity shortcut
         // -----------------------
-        // With no low-fidelity data at all (e.g. the mfbo_hf driver, which
+        // With no low-fidelity data at all (e.g. the mfbo_actors driver, which
         // only ever runs full-fidelity), the multi-fidelity path below would
         // synthesize low_std = 1 and fold it into every prediction, so
         // std_out could never drop below 1 even right on top of an

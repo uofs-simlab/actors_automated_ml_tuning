@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Plot an mfbo_hf run: high-fidelity runs (the real latentflow1.py evals)
+"""Plot an mfbo_actors run: high-fidelity runs (the real latentflow1.py evals)
 vs. the GP's low-fidelity prediction curve + 1-sigma band.
 
-Reads the two CSVs mfbo_hf writes on exit:
-  mfbo_hf_runs.csv  -- one row per actual high-fidelity run
-  mfbo_hf_pred.csv  -- the 50-point GP prediction grid
+Reads the two CSVs mfbo_actors writes on exit:
+  mfbo_actors_runs.csv  -- one row per actual high-fidelity run
+  mfbo_actors_pred.csv  -- the 50-point GP prediction grid
 
 Usage:
-  ../.venv/bin/python3 ./plot_mfbo.py [runs.csv] [pred.csv] [out.png]
+  ../.venv/bin/python3 ./plot_mfbo.py [runs.csv] [pred.csv] [out.png] [driver_name]
 
 x-axis is beta on a LOG scale (equivalently log10 beta). That is the space
 the optimizer actually searches, and it keeps the small-beta decades
@@ -21,9 +21,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-runs_csv = sys.argv[1] if len(sys.argv) > 1 else "mfbo_hf_runs.csv"
-pred_csv = sys.argv[2] if len(sys.argv) > 2 else "mfbo_hf_pred.csv"
-out_png  = sys.argv[3] if len(sys.argv) > 3 else "mfbo_hf.png"
+runs_csv = sys.argv[1] if len(sys.argv) > 1 else "mfbo_actors_runs.csv"
+pred_csv = sys.argv[2] if len(sys.argv) > 2 else "mfbo_actors_pred.csv"
+out_png  = sys.argv[3] if len(sys.argv) > 3 else "mfbo_actors.png"
+driver   = sys.argv[4] if len(sys.argv) > 4 else "mfbo_actors"
 
 
 def load(path):
@@ -67,7 +68,7 @@ ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlabel("β  (log scale)")
 ax.set_ylabel("MMD  (log scale)")
-ax.set_title("mfbo_hf: high-fidelity runs vs GP low-fidelity prediction")
+ax.set_title(f"{driver}: high-fidelity runs vs GP low-fidelity prediction")
 ax.grid(True, which="both", alpha=0.3)
 ax.legend(loc="best", fontsize=9)
 

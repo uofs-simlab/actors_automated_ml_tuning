@@ -42,7 +42,7 @@ double denorm(double u) { return BETA_LO + (BETA_HI - BETA_LO) * u; }
 } // namespace
 
 // ---- worker: unchanged shape from test.cc, just building the fidelity- ----
-// ---- aware command line mfbo_demo.cc's run_latentflow() uses.         ----
+// ---- aware command line mfbo.cc's run_latentflow() uses.               ----
 
 struct worker_state {
     actor manager_actor;
@@ -127,7 +127,7 @@ void run_round(caf::scoped_actor& self, actor_system& system, int num_gpus,
         self->receive(
             [&](std::string msg, job_t job, double mmd, actor /*worker*/) {
                 if (msg != "result") return;
-                // See the matching comment in mfbo_demo.cc's run_latentflow(): this is
+                // See the matching comment in mfbo.cc's run_latentflow(): this is
                 // a defensive floor for exact zero / round-off now that latentflow1.py's
                 // compute_mmd() itself floors at 0.0, not a workaround for the old
                 // shared-bandwidth bug that used to produce real negative MMD values.
@@ -174,9 +174,15 @@ void caf_main(actor_system& system, const config& cfg) {
         std::vector<double> xs = bo.propose_batch(batch);
         std::vector<job_t> jobs;
         jobs.reserve(xs.size());
+        // propose_batch returns candidates best-scoring first. Spend the
+        // expensive high-fidelity eval on the top ~1/4 (at least one), the
+        // rest cheap. The old `i % 4 == 3` used the within-batch index, so
+        // with batch < 4 it never fired and NO acquisition run was ever
+        // high fidelity -- the reported "best" was just the better seed corner.
+        const int n_high = std::max(1, static_cast<int>(xs.size()) / 4);
         for (size_t i = 0; i < xs.size(); ++i)
-            jobs.push_back({xs[i], (i % 4 == 3) ? 1 : 0}); // 3 low : 1 high, same split as MFBO::run()
-        self->println("--- round {} : {} jobs ---", r, jobs.size());
+            jobs.push_back({xs[i], static_cast<int>(i) < n_high ? 1 : 0});
+        self->println("--- round {} : {} jobs ({} high-fi) ---", r, jobs.size(), n_high);
         run_round(self, system, num_gpus, bo, jobs);
     }
 

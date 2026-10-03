@@ -16,8 +16,8 @@
 // That makes this ordinary batch Bayesian optimization: the only cost is
 // the high-fidelity runs; the GP interpolates everywhere you did not run.
 //
-// Build:  make mfbo_hf   (needs the same CAF_PREFIX as test_actor)
-// Run:    ./mfbo_hf --workers 4 --gpus 2
+// Build:  make mfbo-actors   (needs the same CAF_PREFIX as test_actor)
+// Run:    ./mfbo_actors --workers 4 --gpus 2
 
 #include "config.h" // CAF, job registration helpers, the `config` CLI class
 #include "mfbo.h"
@@ -48,9 +48,9 @@ struct job_t {
     }
 };
 
-CAF_BEGIN_TYPE_ID_BLOCK(mfbo_hf_project, caf::first_custom_type_id)
-CAF_ADD_TYPE_ID(mfbo_hf_project, (job_t))
-CAF_END_TYPE_ID_BLOCK(mfbo_hf_project)
+CAF_BEGIN_TYPE_ID_BLOCK(mfbo_actors_project, caf::first_custom_type_id)
+CAF_ADD_TYPE_ID(mfbo_actors_project, (job_t))
+CAF_END_TYPE_ID_BLOCK(mfbo_actors_project)
 
 namespace {
 // beta is searched on a LOG10 scale: the optimizer's u in [0,1] maps to
@@ -189,7 +189,7 @@ void caf_main(actor_system& system, const config& cfg) {
 
     const std::string ts = run_stamp();
     const auto wall_start = std::chrono::steady_clock::now();
-    self->println("mfbo_hf run {} started", ts);
+    self->println("mfbo_actors run {} started", ts);
 
     const int num_gpus = cfg.gpus;
     const int batch    = std::max(2, cfg.workers); // full runs in parallel per round
@@ -199,7 +199,7 @@ void caf_main(actor_system& system, const config& cfg) {
     // never calls evaluate()/run() -- every observation comes in through
     // record(). Throwing placeholders make a stray call loud instead of silent.
     auto unused = [](double) -> double {
-        throw std::logic_error("mfbo_hf: low_()/high_() are never called directly; "
+        throw std::logic_error("mfbo_actors: low_()/high_() are never called directly; "
                                 "high-fidelity results come from record(), low "
                                 "fidelity is predict_high()");
     };
@@ -267,29 +267,29 @@ void caf_main(actor_system& system, const config& cfg) {
         pred_csv << log10_beta(grid[i]) << ',' << denorm(grid[i]) << ','
                  << std::pow(10.0, mean[i]) << ',' << mean[i] << ',' << sd[i] << '\n';
 
-    const std::string runs_path = "mfbo_hf_runs_" + ts + ".csv";
-    const std::string pred_path = "mfbo_hf_pred_" + ts + ".csv";
-    for (const std::string& p : {runs_path, std::string("mfbo_hf_runs.csv")})
+    const std::string runs_path = "mfbo_actors_runs_" + ts + ".csv";
+    const std::string pred_path = "mfbo_actors_pred_" + ts + ".csv";
+    for (const std::string& p : {runs_path, std::string("mfbo_actors_runs.csv")})
         std::ofstream(p) << runs_csv.str();
-    for (const std::string& p : {pred_path, std::string("mfbo_hf_pred.csv")})
+    for (const std::string& p : {pred_path, std::string("mfbo_actors_pred.csv")})
         std::ofstream(p) << pred_csv.str();
-    self->println("\nwrote {}, {} (and mfbo_hf_runs.csv / mfbo_hf_pred.csv)", runs_path, pred_path);
+    self->println("\nwrote {}, {} (and mfbo_actors_runs.csv / mfbo_actors_pred.csv)", runs_path, pred_path);
 
     // Render the PNG straight away so a run always leaves a fresh graph
     // behind -- no need to invoke plot_mfbo.py by hand. Best-effort: if
     // matplotlib/the venv isn't there, the CSVs are still on disk.
-    const std::string png_path = "mfbo_hf_" + ts + ".png";
+    const std::string png_path = "mfbo_actors_" + ts + ".png";
     std::string cmd = "../.venv/bin/python3 ./plot_mfbo.py " + runs_path + " " + pred_path
-                    + " " + png_path + " && cp " + png_path + " mfbo_hf.png";
+                    + " " + png_path + " mfbo_actors && cp " + png_path + " mfbo_actors.png";
     int rc = std::system(cmd.c_str());
     if (rc == 0)
-        self->println("wrote {} (and mfbo_hf.png)", png_path);
+        self->println("wrote {} (and mfbo_actors.png)", png_path);
     else
         self->println("plot_mfbo.py exited with {} -- CSVs are still there, plot them manually", rc);
 
     const auto secs = std::chrono::duration_cast<std::chrono::seconds>(
                           std::chrono::steady_clock::now() - wall_start).count();
-    self->println("mfbo_hf run {} finished in {} s ({} full runs)", ts, secs, trace.size());
+    self->println("mfbo_actors run {} finished in {} s ({} full runs)", ts, secs, trace.size());
     // self is a scoped_actor (blocking) -- returning from caf_main ends the program.
 }
-CAF_MAIN(io::middleman, caf::id_block::mfbo_hf_project)
+CAF_MAIN(io::middleman, caf::id_block::mfbo_actors_project)

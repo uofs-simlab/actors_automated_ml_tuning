@@ -2,14 +2,14 @@ CXX      ?= g++
 TARGET   := test_actor
 SRC      := test.cc
 
-MFBO_TARGET := mfbo_demo
-MFBO_SRC    := mfbo_demo.cc
+MFBO_TARGET := mfbo
+MFBO_SRC    := mfbo.cc
 
 MFBO_CAF_TARGET := mfbo_caf
 MFBO_CAF_SRC    := mfbo_caf.cc
 
-MFBO_HF_TARGET := mfbo_hf
-MFBO_HF_SRC    := mfbo_hf.cc
+MFBO_ACTORS_TARGET := mfbo_actors
+MFBO_ACTORS_SRC    := mfbo_actors.cc
 
 # Installed CAF prefix (headers in $(CAF_PREFIX)/include, libs in $(CAF_PREFIX)/$(CAF_LIBDIR)).
 # test.cc uses the CAF >=1.0 API (anon_mail, self->println, callable self->state()),
@@ -30,17 +30,15 @@ CXXFLAGS += -I$(CAF_PREFIX)/include
 LDFLAGS  += -L$(CAF_PREFIX)/$(CAF_LIBDIR) -Wl,-rpath,$(CAF_PREFIX)/$(CAF_LIBDIR)
 endif
 
-.PHONY: all run clean mfbo run-mfbo mfbo-caf run-mfbo-caf mfbo-hf run-mfbo-hf
+.PHONY: all run clean run-mfbo mfbo-caf run-mfbo-caf mfbo-actors run-mfbo-actors
 
-all: $(TARGET) $(MFBO_TARGET) $(MFBO_CAF_TARGET) $(MFBO_HF_TARGET)
+all: $(TARGET) $(MFBO_TARGET) $(MFBO_CAF_TARGET) $(MFBO_ACTORS_TARGET)
 
 $(TARGET): $(SRC) config.h
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
-# mfbo_demo has no CAF dependency (plain C++17 + libm), so it builds without
-# CAF_PREFIX/LDLIBS.
-mfbo: $(MFBO_TARGET)
-
+# mfbo (sequential baseline, no actors) has no CAF dependency (plain
+# C++17 + libm), so it builds without CAF_PREFIX/LDLIBS.
 $(MFBO_TARGET): $(MFBO_SRC) mfbo.h
 	$(CXX) -std=c++17 -O2 -Wall -Wextra $(MFBO_SRC) -o $(MFBO_TARGET)
 
@@ -57,15 +55,16 @@ $(MFBO_CAF_TARGET): $(MFBO_CAF_SRC) config.h mfbo.h
 run-mfbo-caf: $(MFBO_CAF_TARGET)
 	./$(MFBO_CAF_TARGET)
 
-# mfbo_hf: single-fidelity variant of mfbo_caf (full latentflow1.py runs
-# only, no cheap "low" tier), same CAF link.
-mfbo-hf: $(MFBO_HF_TARGET)
+# mfbo_actors: the main driver -- single-fidelity variant of mfbo_caf (full
+# latentflow1.py runs only, no cheap "low" tier), dispatched to parallel
+# CAF worker actors round-robined across GPUs. Same CAF link as test_actor.
+mfbo-actors: $(MFBO_ACTORS_TARGET)
 
-$(MFBO_HF_TARGET): $(MFBO_HF_SRC) config.h mfbo.h
-	$(CXX) $(CXXFLAGS) $(MFBO_HF_SRC) -o $(MFBO_HF_TARGET) $(LDFLAGS) $(LDLIBS)
+$(MFBO_ACTORS_TARGET): $(MFBO_ACTORS_SRC) config.h mfbo.h
+	$(CXX) $(CXXFLAGS) $(MFBO_ACTORS_SRC) -o $(MFBO_ACTORS_TARGET) $(LDFLAGS) $(LDLIBS)
 
-run-mfbo-hf: $(MFBO_HF_TARGET)
-	./$(MFBO_HF_TARGET)
+run-mfbo-actors: $(MFBO_ACTORS_TARGET)
+	./$(MFBO_ACTORS_TARGET)
 
 clean:
-	rm -f $(TARGET) $(MFBO_TARGET) $(MFBO_CAF_TARGET) $(MFBO_HF_TARGET)
+	rm -f $(TARGET) $(MFBO_TARGET) $(MFBO_CAF_TARGET) $(MFBO_ACTORS_TARGET)

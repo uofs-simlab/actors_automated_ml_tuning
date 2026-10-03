@@ -15,13 +15,13 @@ BATCH_SIZE  = 600#51201     # VAEs are more sensitive to batch size than standar
                      # KL term is averaged over batch
                      # posterior statistics depend on batch distribution
                      # So: Bigger batch ≠ always better latent space
-EPOCHS      = 5
+EPOCHS      = 50
 LR          = 1e-3
 BETA        = 1.0#0.10      # default weight on KL term (β-VAE); each actor overrides this
 DEVICE      = "cuda" if torch.cuda.is_available() else "cpu"
 
 LR_FM       = 1e-5
-EPOCHS_FM   = 5
+EPOCHS_FM   = 50
 
 
 class GPUTensorLoader:
